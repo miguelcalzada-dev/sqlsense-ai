@@ -126,7 +126,7 @@ export default function ChallengesPage() {
   }, []);
 
   useEffect(() => {
-    if (status === "idle") void init();
+    if (status === "idle") void init().catch(() => undefined);
   }, [status, init]);
 
   const grouped = useMemo(() => {

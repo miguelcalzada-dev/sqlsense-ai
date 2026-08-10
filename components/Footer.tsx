@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import BrandMark from "./BrandMark";
 
 export default function Footer() {
   return (
@@ -8,9 +8,7 @@ export default function Footer() {
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-[12px] bg-gradient-to-br from-accent to-accent2 shadow-md">
-                <Sparkles className="h-4.5 w-4.5 text-white" strokeWidth={2.4} />
-              </span>
+              <BrandMark />
               <span className="text-[15px] font-semibold tracking-tight">
                 SQLSense<span className="text-accent">.</span>
               </span>

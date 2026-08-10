@@ -43,7 +43,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    if (status === "idle") void init();
+    if (status === "idle") void init().catch(() => undefined);
   }, [status, init]);
 
   const runTranslate = useCallback(

@@ -36,7 +36,7 @@ const SNIPPETS = [
 ];
 
 export default function LabPage() {
-  const { init, status, execute, reset, statementsRun } = useDatabase();
+  const { init, status, error, execute, reset, statementsRun } = useDatabase();
   const [sql, setSql] = useState(
     "SELECT c.modelo, m.nombre AS marca, c.color, c.precio\nFROM coches c JOIN marcas m ON c.marca_id = m.id\nORDER BY c.precio DESC LIMIT 10;",
   );
@@ -48,7 +48,7 @@ export default function LabPage() {
   const [tab, setTab] = useState<"editor" | "ai">("editor");
 
   useEffect(() => {
-    if (status === "idle") void init();
+    if (status === "idle") void init().catch(() => undefined);
   }, [status, init]);
 
   const run = (code = sql) => {
@@ -83,7 +83,7 @@ export default function LabPage() {
             base de datos vive en tu navegador: reiníciala cuando quieras.
           </p>
         </div>
-        <StatusBadges status={status} statementsRun={statementsRun} onReset={reset} />
+         <StatusBadges status={status} error={error} statementsRun={statementsRun} onReset={reset} />
       </header>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
@@ -130,8 +130,13 @@ export default function LabPage() {
               </div>
             </div>
 
-            {tab === "editor" ? (
+              {tab === "editor" ? (
               <div className="p-3">
+                {status === "error" && error && (
+                  <div className="mb-3 rounded-xl border border-accent3/20 bg-accent3/5 px-3 py-2 text-[12px] text-accent3">
+                    SQLite no pudo iniciarse: {error}. Comprueba la conexión y pulsa reiniciar.
+                  </div>
+                )}
                 <SqlEditor
                   ref={editorRef}
                   value={sql}
@@ -259,10 +264,12 @@ function TabButton({
 
 function StatusBadges({
   status,
+  error,
   statementsRun,
   onReset,
 }: {
   status: string;
+  error: string | null;
   statementsRun: number;
   onReset: () => void;
 }) {
@@ -283,8 +290,13 @@ function StatusBadges({
             ready ? "bg-accent4" : "bg-ink-sub animate-pulse",
           )}
         />
-        {ready ? "SQLite WASM listo" : "Cargando…"}
+        {ready ? "SQLite WASM listo" : status === "error" ? "SQLite no disponible" : "Cargando…"}
       </span>
+      {status === "error" && error && (
+        <span className="max-w-[240px] truncate text-[11px] text-accent3" title={error}>
+          {error}
+        </span>
+      )}
       {ready && (
         <span className="pill text-ink-sub">
           {formatNumber(statementsRun)} consultas

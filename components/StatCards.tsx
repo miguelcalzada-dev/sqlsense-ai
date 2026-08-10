@@ -26,7 +26,7 @@ export default function StatCards() {
   const { init, status, execute } = useDatabase();
 
   useEffect(() => {
-    if (status === "idle") void init();
+    if (status === "idle") void init().catch(() => undefined);
   }, [status, init]);
 
   const ready = status === "ready";

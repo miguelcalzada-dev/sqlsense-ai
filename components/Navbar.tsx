@@ -8,7 +8,6 @@ import {
   BookOpen,
   Database,
   Moon,
-  Sparkles,
   Sun,
   Trophy,
   Menu,
@@ -17,6 +16,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import { cn } from "@/lib/utils";
+import BrandMark from "./BrandMark";
 
 const NAV = [
   { href: "/lab", label: "Laboratorio", icon: Beaker },
@@ -59,10 +59,7 @@ export default function Navbar() {
           )}
         >
           <Link href="/" className="group flex items-center gap-2.5 ring-focus rounded-full">
-            <span className="relative grid h-9 w-9 place-items-center rounded-[12px] bg-gradient-to-br from-accent to-accent2 shadow-md">
-              <Sparkles className="h-4.5 w-4.5 text-white" strokeWidth={2.4} />
-              <span className="absolute inset-0 rounded-[12px] ring-1 ring-inset ring-white/25" />
-            </span>
+            <BrandMark />
             <span className="text-[15px] font-semibold tracking-tight">
               SQLSense
               <span className="text-accent">.</span>

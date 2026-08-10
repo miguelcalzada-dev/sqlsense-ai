@@ -23,7 +23,7 @@ export default function SchemaViewer() {
   const { init, status, db, execute } = useDatabase();
 
   useEffect(() => {
-    if (status === "idle") void init();
+    if (status === "idle") void init().catch(() => undefined);
   }, [status, init]);
 
   const activeTable = useMemo(
