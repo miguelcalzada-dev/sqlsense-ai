@@ -11,7 +11,7 @@ import {
   Wand2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useDatabase, type QueryResult } from "@/lib/db/sqlite";
+import { executeWhenReady, useDatabase, type QueryResult } from "@/lib/db/sqlite";
 import type { TranslateResponse } from "@/lib/ai/types";
 import Button from "@/components/ui/Button";
 import ResultTable from "./ResultTable";
@@ -32,7 +32,7 @@ type Props = {
 };
 
 export default function NLLabPanel({ onUseSQL }: Props) {
-  const { init, status, execute } = useDatabase();
+  const { init, status } = useDatabase();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<TranslateResponse | null>(null);
@@ -68,7 +68,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
         const data = (await res.json()) as TranslateResponse;
         setResult(data);
         if (data.sql) {
-          const exec = execute(data.sql);
+          const exec = await executeWhenReady(data.sql);
           setPreview(exec);
         }
       } catch (e) {
@@ -82,8 +82,8 @@ export default function NLLabPanel({ onUseSQL }: Props) {
   );
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-      <div className="card flex flex-col gap-3 p-4">
+    <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)]">
+      <div className="card flex min-w-0 flex-col gap-3 p-4">
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-accent" />
           <h3 className="text-[14px] font-semibold">Pregunta en lenguaje natural</h3>
@@ -106,7 +106,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
           className="input-base w-full resize-none px-3.5 py-3 text-[14px] leading-relaxed"
         />
 
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex max-w-full gap-1.5 overflow-x-auto pb-1">
           {EXAMPLES.map((ex) => (
             <button
               key={ex}
@@ -115,7 +115,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
                 setQuery(ex);
                 void runTranslate(ex);
               }}
-              className="chip transition-transform hover:scale-105 active:scale-95"
+              className="chip shrink-0 transition-transform hover:scale-105 active:scale-95"
             >
               {ex}
             </button>
@@ -152,7 +152,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
         </p>
       </div>
 
-      <div className="card flex flex-col gap-3 p-4">
+      <div className="card flex min-w-0 flex-col gap-3 p-4 lg:p-5">
         <div className="flex items-center gap-2">
           <Wand2 className="h-4 w-4 text-accent2" />
           <h3 className="text-[14px] font-semibold">Resultado IA</h3>

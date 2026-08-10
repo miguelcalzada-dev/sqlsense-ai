@@ -19,7 +19,7 @@ import {
   type Challenge,
   type Difficulty,
 } from "@/lib/challenges";
-import { useDatabase, type QueryResult } from "@/lib/db/sqlite";
+import { executeWhenReady, useDatabase, type QueryResult } from "@/lib/db/sqlite";
 import { cn } from "@/lib/utils";
 import Badge from "@/components/ui/Badge";
 import SqlEditor, { type SqlEditorHandle } from "@/components/sql/SqlEditor";
@@ -110,7 +110,7 @@ function saveCompleted(set: Set<string>) {
 }
 
 export default function ChallengesPage() {
-  const { init, status, execute } = useDatabase();
+  const { init, status } = useDatabase();
   const [activeDiff, setActiveDiff] = useState<Difficulty>("Principiante");
   const [active, setActive] = useState<Challenge>(CHALLENGES[0]);
   const [sql, setSql] = useState(CHALLENGES[0].starterCode);
@@ -149,19 +149,14 @@ export default function ChallengesPage() {
     setShowHint(false);
   };
 
-  const run = useCallback(
-    (code: string) => {
-      if (status !== "ready") return;
-      setResult(execute(code));
-    },
-    [execute, status],
-  );
+  const run = useCallback(async (code: string) => {
+    setResult(await executeWhenReady(code));
+  }, []);
 
-  const validate = useCallback(() => {
-    if (status !== "ready") return;
-    const userRes = execute(sql.trim());
+  const validate = useCallback(async () => {
+    const userRes = await executeWhenReady(sql.trim());
     setResult(userRes);
-    const canonRes = execute(active.canonicalSQL);
+    const canonRes = await executeWhenReady(active.canonicalSQL);
     setCanonical(canonRes);
     if ("error" in canonRes) {
       setVerdict({ ok: false, reason: "No se pudo generar la solución canónica." });
@@ -177,7 +172,7 @@ export default function ChallengesPage() {
         return next;
       });
     }
-  }, [active, execute, sql, status]);
+  }, [active, sql]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -234,7 +229,7 @@ export default function ChallengesPage() {
         })}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[280px_1fr]">
+      <div className="grid min-w-0 gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
         <aside className="space-y-1.5">
           {grouped[activeDiff].map((c) => {
             const done = completed.has(c.id);
@@ -291,7 +286,7 @@ export default function ChallengesPage() {
           })}
         </aside>
 
-        <section className="space-y-3">
+        <section className="min-w-0 space-y-3">
           <div className="card p-5">
             <div className="flex flex-wrap items-start gap-2">
               <h2 className="text-[20px] font-semibold">{active.title}</h2>
@@ -324,7 +319,7 @@ export default function ChallengesPage() {
               <div className="ml-auto flex items-center gap-1.5 pr-1">
                 <button
                   type="button"
-                  onClick={() => run(sql)}
+                  onClick={() => void run(sql)}
                   className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-line-soft bg-surface px-3 text-[12.5px] font-semibold text-ink ring-focus hover:bg-bg-soft"
                 >
                   <Play className="h-3.5 w-3.5" />
@@ -332,7 +327,7 @@ export default function ChallengesPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={validate}
+                  onClick={() => void validate()}
                   className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-ink px-3 text-[12.5px] font-semibold text-[rgb(var(--bg))] ring-focus hover:opacity-90"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5" />

@@ -52,7 +52,7 @@ export default function SchemaViewer() {
     rows && "columns" in rows ? Number(rows.rows[0]?.[0] ?? 0) : null;
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[260px_1fr]">
+    <div className="grid min-w-0 gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
       <aside className="card p-3">
         <div className="flex items-center gap-2 px-2 py-2">
           <Database className="h-4 w-4 text-accent" />

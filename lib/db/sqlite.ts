@@ -170,3 +170,19 @@ export function ensureDatabase(): Promise<void> {
   const store = useDatabase.getState();
   return store.init();
 }
+
+export async function executeWhenReady(
+  sql: string,
+): Promise<QueryResult | { error: string }> {
+  try {
+    await useDatabase.getState().init();
+    return useDatabase.getState().execute(sql);
+  } catch (e) {
+    return {
+      error:
+        e instanceof Error
+          ? e.message
+          : "No se pudo inicializar la base de datos.",
+    };
+  }
+}

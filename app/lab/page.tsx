@@ -10,7 +10,7 @@ import {
   Sparkles,
   ListTree,
 } from "lucide-react";
-import { useDatabase, type QueryResult } from "@/lib/db/sqlite";
+import { executeWhenReady, useDatabase, type QueryResult } from "@/lib/db/sqlite";
 import { SCHEMA } from "@/lib/db/schema";
 import Link from "next/link";
 import SqlEditor, { type SqlEditorHandle } from "@/components/sql/SqlEditor";
@@ -36,7 +36,7 @@ const SNIPPETS = [
 ];
 
 export default function LabPage() {
-  const { init, status, error, execute, reset, statementsRun } = useDatabase();
+  const { init, status, error, reset, statementsRun } = useDatabase();
   const [sql, setSql] = useState(
     "SELECT c.modelo, m.nombre AS marca, c.color, c.precio\nFROM coches c JOIN marcas m ON c.marca_id = m.id\nORDER BY c.precio DESC LIMIT 10;",
   );
@@ -51,11 +51,10 @@ export default function LabPage() {
     if (status === "idle") void init().catch(() => undefined);
   }, [status, init]);
 
-  const run = (code = sql) => {
-    if (status !== "ready") return;
+  const run = async (code = sql) => {
     setRunning(true);
     try {
-      const r = execute(code.trim());
+      const r = await executeWhenReady(code.trim());
       setResult(r);
     } finally {
       setTimeout(() => setRunning(false), 120);
@@ -65,7 +64,7 @@ export default function LabPage() {
   const setEditorSQL = (code: string) => {
     setSql(code);
     setTab("editor");
-    run(code);
+    void run(code);
   };
 
   return (
@@ -83,11 +82,11 @@ export default function LabPage() {
             base de datos vive en tu navegador: reiníciala cuando quieras.
           </p>
         </div>
-         <StatusBadges status={status} error={error} statementsRun={statementsRun} onReset={reset} />
+         <StatusBadges status={status} error={error} statementsRun={statementsRun} />
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-        <section className="space-y-3">
+      <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+        <section className="min-w-0 space-y-3">
           <div className="card overflow-hidden">
             <div className="flex items-center gap-1 border-b border-line-soft bg-bg-soft/40 px-2 py-1.5">
               <TabButton
@@ -107,7 +106,7 @@ export default function LabPage() {
               <div className="ml-auto flex items-center gap-1.5 pr-1">
                 <button
                   type="button"
-                  onClick={() => run()}
+                  onClick={() => void run()}
                   disabled={status !== "ready" || running}
                   className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-ink px-3 text-[12.5px] font-semibold text-[rgb(var(--bg))] ring-focus transition-transform hover:scale-[1.02] active:scale-95 disabled:opacity-50"
                 >
@@ -120,7 +119,7 @@ export default function LabPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => void reset()}
+                  onClick={() => void reset().catch(() => undefined)}
                   className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-line-soft bg-surface px-2.5 text-[12px] font-medium text-ink-soft ring-focus hover:text-ink hover:border-line"
                   aria-label="Reiniciar base de datos"
                   title="Reiniciar base de datos"
@@ -141,7 +140,7 @@ export default function LabPage() {
                   ref={editorRef}
                   value={sql}
                   onChange={setSql}
-                  onRun={() => run()}
+                  onRun={() => void run()}
                   minHeight={200}
                 />
                 <div className="mt-2 flex flex-wrap items-center gap-1.5">
@@ -152,7 +151,7 @@ export default function LabPage() {
                       type="button"
                       onClick={() => {
                         setSql(s.sql);
-                        run(s.sql);
+                        void run(s.sql);
                       }}
                       className="chip"
                     >
@@ -186,7 +185,7 @@ export default function LabPage() {
           </div>
         </section>
 
-        <aside className="space-y-3">
+        <aside className="min-w-0 space-y-3">
           <SqlExplainPanel sql={sql} />
 
           <div className="card p-4">
@@ -266,12 +265,10 @@ function StatusBadges({
   status,
   error,
   statementsRun,
-  onReset,
 }: {
   status: string;
   error: string | null;
   statementsRun: number;
-  onReset: () => void;
 }) {
   const ready = status === "ready";
   return (
