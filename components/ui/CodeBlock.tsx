@@ -1,22 +1,22 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import CopyButton from "./CopyButton";
 import { highlightTokens } from "@/lib/sql-highlight";
 import { cn } from "@/lib/utils";
 
-const COLOR: Record<string, string> = {
-  keyword: "color: rgb(var(--accent-2)); font-weight: 600;",
-  function: "color: rgb(var(--accent-5)); font-weight: 600;",
-  type: "color: rgb(var(--accent-4)); font-style: italic;",
-  string: "color: rgb(var(--accent-4));",
-  number: "color: rgb(var(--accent-5));",
-  ident: "color: rgb(var(--ink));",
-  identifier: "color: rgb(var(--ink-soft));",
-  comment: "color: rgb(var(--sub)); font-style: italic;",
-  punct: "color: rgb(var(--ink-soft));",
-  other: "color: rgb(var(--ink-soft));",
-  ws: "",
+const COLOR: Record<string, CSSProperties> = {
+  keyword: { color: "rgb(var(--accent-2))", fontWeight: 600 },
+  function: { color: "rgb(var(--accent-5))", fontWeight: 600 },
+  type: { color: "rgb(var(--accent-4))", fontStyle: "italic" },
+  string: { color: "rgb(var(--accent-4))" },
+  number: { color: "rgb(var(--accent-5))" },
+  ident: { color: "rgb(var(--ink))" },
+  identifier: { color: "rgb(var(--ink-soft))" },
+  comment: { color: "rgb(var(--sub))", fontStyle: "italic" },
+  punct: { color: "rgb(var(--ink-soft))" },
+  other: { color: "rgb(var(--ink-soft))" },
+  ws: {},
 };
 
 export default function CodeBlock({
@@ -56,7 +56,7 @@ export default function CodeBlock({
           {tokens.map((t, i) => {
             if (t.type === "ws") return <span key={i}>{t.value}</span>;
             return (
-              <span key={i} style={COLOR[t.type] ?? ""}>
+              <span key={i} style={COLOR[t.type] ?? {}}>
                 {t.value}
               </span>
             );
