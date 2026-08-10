@@ -328,7 +328,7 @@ export function localExplain(sql: string): ExplainResponse {
       ? steps
       : [{ clause: "SQL", note: "Consulta general sobre el esquema" }],
     tables,
-    citations: tables.map((t) ({ clause: t, what: "Tabla referenciada" })),
+    citations: tables.map((t) => ({ clause: t, what: "Tabla referenciada" })),
     source: "local",
   };
 }
