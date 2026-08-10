@@ -200,14 +200,14 @@ export default function NLLabPanel({ onUseSQL }: Props) {
                 {result.summary}
               </p>
 
-              <div className="border-4 border-line bg-bg p-4 font-mono text-sm leading-relaxed shadow-brutal-sm">
+              <div className="border-4 border-line bg-[#1a1a1e] p-4 font-mono text-sm leading-relaxed shadow-brutal-sm">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-sub">
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-white/40">
                     SQL generado
                   </span>
                   <CopyButton text={result.sql} />
                 </div>
-                <pre className="overflow-x-auto whitespace-pre text-ink">
+                <pre className="overflow-x-auto whitespace-pre text-[#e4e4e7]">
                   {result.sql || "---"}
                 </pre>
               </div>

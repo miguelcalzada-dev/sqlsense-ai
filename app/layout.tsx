@@ -18,6 +18,9 @@ export const metadata: Metadata = {
       "Traduce lenguaje natural a SQL, ejecuta y experimenta en un laboratorio efimero en tu navegador.",
     type: "website",
   },
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect x='2' y='2' width='36' height='36' fill='%23ff3e00' stroke='%23111' stroke-width='3'/><ellipse cx='20' cy='13' rx='9' ry='4' fill='none' stroke='white' stroke-width='2.2'/><path d='M11 13v14c0 2.2 4 4 9 4s9-1.8 9-4V13' fill='none' stroke='white' stroke-width='2.2'/><path d='M11 20c0 2.2 4 4 9 4s9-1.8 9-4' fill='none' stroke='white' stroke-width='1.5' opacity='0.6'/></svg>",
+  },
 };
 
 export const viewport: Viewport = {

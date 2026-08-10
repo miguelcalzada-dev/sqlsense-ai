@@ -208,7 +208,7 @@ const PATTERNS: Pattern[] = [
     },
   },
   {
-    test: (t) => /ventas?\s+de/i.test(t) && !!matchYear(t),
+    test: (t) => /ventas?\s+(de|en)\b/i.test(t) && !!matchYear(t),
     build: (t) => {
       const year = matchYear(t)!;
       return final(
