@@ -102,9 +102,13 @@ function Hero() {
           SQLite WASM · IA local + OpenAI
         </span>
 
-        <h1 className="mt-8 max-w-5xl font-heading text-5xl leading-tight tracking-tight sm:text-7xl uppercase">
-          Aprende SQL{" "}
-          <span className="text-gradient">hablando con IA</span>
+        <h1 className="mt-8 max-w-5xl font-heading text-5xl leading-[1.05] tracking-tight sm:text-7xl uppercase">
+          Aprende SQL
+          <br />
+          hablando con{" "}
+          <span className="inline-block bg-accent text-surface border-4 border-line px-3 sm:px-5 shadow-brutal">
+            IA
+          </span>
         </h1>
 
         <p className="mt-6 max-w-2xl font-mono text-sm uppercase tracking-wider text-sub">
