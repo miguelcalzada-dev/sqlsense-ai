@@ -7,14 +7,11 @@ import {
   Beaker,
   BookOpen,
   Database,
-  Moon,
-  Sun,
   Trophy,
   Menu,
   X,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "./ThemeProvider";
 import { cn } from "@/lib/utils";
 import BrandMark from "./BrandMark";
 
@@ -27,7 +24,6 @@ const NAV = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { theme, toggle } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -46,23 +42,23 @@ export default function Navbar() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "py-2.5" : "py-4",
+        scrolled ? "py-2" : "py-3",
       )}
     >
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-7xl px-4">
         <nav
           className={cn(
-            "flex items-center justify-between rounded-apple-lg px-4 py-2.5 transition-all duration-300",
+            "flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-300",
             scrolled
-              ? "glass shadow-md border"
-              : "border border-transparent bg-transparent",
+              ? "glass shadow-lg"
+              : "border border-white/5 bg-surface/50 backdrop-blur-sm",
           )}
         >
           <Link href="/" className="group flex items-center gap-2.5 ring-focus rounded-full">
             <BrandMark />
-            <span className="text-[15px] font-semibold tracking-tight">
+            <span className="text-[15px] font-bold tracking-tight text-ink">
               SQLSense
-              <span className="text-accent">.</span>
+              <span className="text-gradient">.</span>
             </span>
           </Link>
 
@@ -75,7 +71,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13.5px] font-medium transition-colors ring-focus",
+                    "relative flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors ring-focus",
                     active
                       ? "text-ink"
                       : "text-ink-sub hover:text-ink",
@@ -84,7 +80,7 @@ export default function Navbar() {
                   {active && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 -z-10 rounded-full bg-bg-soft border border-line-soft"
+                      className="absolute inset-0 -z-10 rounded-full bg-white/[0.06] border border-white/[0.08]"
                       transition={{ type: "spring", bounce: 0.18, duration: 0.5 }}
                     />
                   )}
@@ -95,22 +91,10 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={toggle}
-              aria-label="Cambiar tema"
-              className="grid h-9 w-9 place-items-center rounded-full border border-line-soft bg-surface/60 text-ink-soft ring-focus hover:bg-bg-soft transition-colors"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" strokeWidth={2.2} />
-              ) : (
-                <Moon className="h-4 w-4" strokeWidth={2.2} />
-              )}
-            </button>
+          <div className="flex items-center gap-2">
             <Link
               href="/lab"
-              className="hidden sm:inline-flex items-center rounded-full bg-ink px-4 py-2 text-[13px] font-semibold text-[rgb(var(--bg))] ring-focus hover:opacity-90 transition-opacity"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent2 px-4 py-2 text-[13px] font-semibold text-white ring-focus hover:opacity-90 transition-opacity"
             >
               Abrir laboratorio
             </Link>
@@ -118,7 +102,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="Menú"
-              className="md:hidden grid h-9 w-9 place-items-center rounded-full border border-line-soft bg-surface/60 ring-focus"
+              className="md:hidden grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 ring-focus"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -143,7 +127,7 @@ export default function Navbar() {
                     href={item.href}
                     className={cn(
                       "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ring-focus",
-                      active ? "bg-bg-soft text-ink" : "text-ink-soft",
+                      active ? "bg-white/[0.06] text-ink" : "text-ink-soft",
                     )}
                   >
                     <Icon className="h-4 w-4 opacity-80" />
@@ -153,7 +137,7 @@ export default function Navbar() {
               })}
               <Link
                 href="/lab"
-                className="mt-1 flex items-center justify-center rounded-xl bg-ink px-3 py-2.5 text-sm font-semibold text-[rgb(var(--bg))]"
+                className="mt-1 flex items-center justify-center rounded-xl bg-gradient-to-r from-accent to-accent2 px-3 py-2.5 text-sm font-semibold text-white"
               >
                 Abrir laboratorio
               </Link>

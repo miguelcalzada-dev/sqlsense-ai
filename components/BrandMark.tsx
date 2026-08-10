@@ -4,12 +4,26 @@ export default function BrandMark({ className }: { className?: string }) {
   return (
     <span className={cn("relative grid h-9 w-9 shrink-0 place-items-center", className)} aria-hidden="true">
       <svg viewBox="0 0 40 40" className="h-full w-full" fill="none">
-        <rect x="1.5" y="1.5" width="37" height="37" rx="12" fill="rgb(var(--ink))" />
-        <path d="M10 13.5h20M10 20h20M10 26.5h20" stroke="rgb(var(--bg))" strokeWidth="2.4" strokeLinecap="round" />
-        <circle cx="14" cy="13.5" r="1.4" fill="rgb(var(--accent))" />
-        <circle cx="14" cy="20" r="1.4" fill="rgb(var(--accent-4))" />
-        <circle cx="14" cy="26.5" r="1.4" fill="rgb(var(--accent-5))" />
-        <rect x="1.5" y="1.5" width="37" height="37" rx="12" stroke="rgb(var(--bg))" strokeOpacity=".14" />
+        <defs>
+          <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgb(6, 182, 212)" />
+            <stop offset="100%" stopColor="rgb(139, 92, 246)" />
+          </linearGradient>
+        </defs>
+        <rect x="1" y="1" width="38" height="38" rx="10" fill="url(#brand-grad)" />
+        <path
+          d="M12 14L18 20L12 26"
+          stroke="white"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M20 26H28"
+          stroke="white"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
       </svg>
     </span>
   );

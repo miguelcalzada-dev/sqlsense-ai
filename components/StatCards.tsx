@@ -15,11 +15,11 @@ type Card = {
 };
 
 const CARDS: Card[] = [
-  { key: "marcas", label: "Marcas", icon: Tags, rgb: "94,92,230" },
-  { key: "coches", label: "Coches", icon: Boxes, rgb: "0,113,227" },
-  { key: "clientes", label: "Clientes", icon: Boxes, rgb: "255,90,95" },
-  { key: "ventas", label: "Ventas", icon: ShoppingCart, rgb: "50,215,170" },
-  { key: "ingresos", label: "Ingresos totales", icon: TrendingUp, rgb: "255,159,10", isMoney: true },
+  { key: "marcas", label: "Marcas", icon: Tags, rgb: "139,92,246" },
+  { key: "coches", label: "Coches", icon: Boxes, rgb: "6,182,212" },
+  { key: "clientes", label: "Clientes", icon: Boxes, rgb: "244,63,94" },
+  { key: "ventas", label: "Ventas", icon: ShoppingCart, rgb: "16,185,129" },
+  { key: "ingresos", label: "Ingresos totales", icon: TrendingUp, rgb: "245,158,11", isMoney: true },
 ];
 
 export default function StatCards() {
@@ -61,20 +61,20 @@ export default function StatCards() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            className="card p-4"
+            className="card p-5 border-white/[0.06]"
           >
             <div
-              className="grid h-9 w-9 place-items-center rounded-xl"
+              className="grid h-10 w-10 place-items-center rounded-xl"
               style={{ background: `rgba(${c.rgb},0.12)`, color: `rgba(${c.rgb},1)` }}
             >
-              <Icon className="h-4.5 w-4.5" />
+              <Icon className="h-5 w-5" />
             </div>
             <p className="mt-3 text-[11px] font-medium uppercase tracking-wider text-ink-sub">
               {c.label}
             </p>
-            <p className="mt-1 font-mono text-[22px] font-semibold tabular-nums text-ink">
+            <p className="mt-1 font-mono text-[24px] font-bold tabular-nums text-ink">
               {value === null
-                ? "—"
+                ? "---"
                 : c.isMoney
                   ? formatCurrency(value)
                   : formatNumber(value)}

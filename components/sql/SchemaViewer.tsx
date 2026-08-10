@@ -48,23 +48,22 @@ export default function SchemaViewer() {
     );
   }, [query]);
 
-  const count =
-    rows && "columns" in rows ? Number(rows.rows[0]?.[0] ?? 0) : null;
+  const count = rows && "columns" in rows ? Number(rows.rows[0]?.[0] ?? 0) : null;
 
   return (
-    <div className="grid min-w-0 gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
-      <aside className="card p-3">
+    <div className="grid min-w-0 gap-5 lg:grid-cols-[280px_minmax(0,1fr)]">
+      <aside className="card p-3 border-white/[0.06]">
         <div className="flex items-center gap-2 px-2 py-2">
           <Database className="h-4 w-4 text-accent" />
-          <span className="text-[13px] font-semibold">Tablas</span>
+          <span className="text-[14px] font-semibold">Tablas</span>
         </div>
         <div className="relative mt-1">
-          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-sub" />
+          <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-sub" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Filtrar tablas…"
-            className="input-base w-full pl-8 pr-3 py-2 text-[13px]"
+            placeholder="Filtrar tablas..."
+            className="input-base w-full pl-9 pr-3 py-2.5 text-[13px]"
           />
         </div>
         <ul className="mt-2 space-y-1">
@@ -74,44 +73,35 @@ export default function SchemaViewer() {
                 type="button"
                 onClick={() => setActive(t.name)}
                 className={cn(
-                  "flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-[13px] ring-focus transition-colors",
+                  "flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left text-[13px] ring-focus transition-colors",
                   active === t.name
-                    ? "bg-bg-soft text-ink"
-                    : "text-ink-soft hover:bg-bg-soft/60 hover:text-ink",
+                    ? "bg-white/[0.06] text-ink"
+                    : "text-ink-soft hover:bg-white/[0.04] hover:text-ink",
                 )}
               >
                 <span
-                  className="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-[14px]"
+                  className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[15px]"
                   style={{ background: `${t.color}1a` }}
                 >
                   {t.emoji}
                 </span>
                 <span className="flex-1">
-                  <span className="block font-mono text-[12.5px] font-medium">
-                    {t.name}
-                  </span>
-                  <span className="block text-[11px] text-ink-sub">
-                    {t.columns.length} columnas
-                  </span>
+                  <span className="block font-mono text-[13px] font-medium">{t.name}</span>
+                  <span className="block text-[11px] text-ink-sub">{t.columns.length} columnas</span>
                 </span>
                 <ChevronRight className="h-3.5 w-3.5 opacity-40" />
               </button>
             </li>
           ))}
           {!filtered.length && (
-            <li className="px-2 py-3 text-center text-[12px] text-ink-sub">
+            <li className="px-2 py-3 text-center text-[13px] text-ink-sub">
               Sin coincidencias
             </li>
           )}
         </ul>
       </aside>
 
-      <TableDetail
-        table={activeTable}
-        count={count}
-        runSQL={execute}
-        status={status}
-      />
+      <TableDetail table={activeTable} count={count} runSQL={execute} status={status} />
     </div>
   );
 }
@@ -127,9 +117,7 @@ function TableDetail({
   runSQL: (sql: string) => QueryResult | { error: string };
   status: string;
 }) {
-  const [preview, setPreview] = useState<QueryResult | { error: string } | null>(
-    null,
-  );
+  const [preview, setPreview] = useState<QueryResult | { error: string } | null>(null);
 
   useEffect(() => {
     if (status !== "ready") return;
@@ -137,30 +125,30 @@ function TableDetail({
   }, [table.name, status, runSQL]);
 
   return (
-    <div className="space-y-4">
-      <div className="card overflow-hidden">
-        <div className="flex items-start gap-3 border-b border-line-soft p-4">
+    <div className="space-y-5">
+      <div className="card overflow-hidden border-white/[0.06]">
+        <div className="flex items-start gap-3 border-b border-white/[0.06] p-5">
           <span
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-[20px]"
+            className="grid h-12 w-12 shrink-0 place-items-center rounded-xl text-[22px]"
             style={{ background: `${table.color}1a` }}
           >
             {table.emoji}
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <h3 className="truncate text-[15px] font-semibold">{table.label}</h3>
-              <code className="rounded-md bg-bg-soft px-1.5 py-0.5 font-mono text-[11.5px] text-ink-sub">
+              <h3 className="truncate text-[16px] font-semibold">{table.label}</h3>
+              <code className="rounded-md bg-white/[0.06] px-2 py-0.5 font-mono text-[12px] text-ink-sub">
                 {table.name}
               </code>
             </div>
-            <p className="mt-1 text-[12.5px] text-ink-sub">{table.desc}</p>
+            <p className="mt-1 text-[13px] text-ink-sub">{table.desc}</p>
           </div>
           <div className="text-right">
             <div className="text-[11px] uppercase tracking-wider text-ink-sub">
               Filas
             </div>
-            <div className="font-mono text-[18px] font-semibold tabular-nums text-ink">
-              {count === null ? "—" : formatNumber(count)}
+            <div className="font-mono text-[20px] font-bold tabular-nums text-ink">
+              {count === null ? "---" : formatNumber(count)}
             </div>
           </div>
         </div>
@@ -170,7 +158,7 @@ function TableDetail({
             <div
               key={c.name}
               className={cn(
-                "border-b border-line-soft p-3",
+                "border-b border-white/[0.06] p-4",
                 (i + 1) % 3 !== 0 && "lg:border-r",
                 (i + 1) % 2 !== 0 && "sm:border-r lg:border-r-0",
               )}
@@ -183,17 +171,17 @@ function TableDetail({
                 ) : (
                   <span className="ml-1 h-1.5 w-1.5 rounded-full bg-ink-sub/40" />
                 )}
-                <code className="font-mono text-[12.5px] font-semibold text-ink">
+                <code className="font-mono text-[13px] font-semibold text-ink">
                   {c.name}
                 </code>
-                <span className="ml-auto font-mono text-[10.5px] uppercase text-ink-sub">
+                <span className="ml-auto font-mono text-[11px] uppercase text-ink-sub">
                   {c.type}
                 </span>
               </div>
-              <p className="mt-1.5 text-[12px] leading-snug text-ink-sub">
+              <p className="mt-2 text-[12px] leading-snug text-ink-sub">
                 {c.desc}
               </p>
-              <div className="mt-1.5 flex flex-wrap gap-1.5">
+              <div className="mt-2 flex flex-wrap gap-1.5">
                 {c.pk && (
                   <span className="chip border-accent5/20 bg-accent5/10 text-accent5">
                     PRIMARY KEY
@@ -201,7 +189,7 @@ function TableDetail({
                 )}
                 {c.fk && (
                   <span className="chip border-accent2/20 bg-accent2/10 text-accent2">
-                    → {c.fk.table}.{c.fk.column}
+                    {c.fk.table}.{c.fk.column}
                   </span>
                 )}
                 {c.notNull && !c.pk && (
@@ -213,24 +201,24 @@ function TableDetail({
         </div>
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="flex items-center justify-between border-b border-line-soft px-4 py-2.5">
+      <div className="card overflow-hidden border-white/[0.06]">
+        <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
           <div className="flex items-center gap-2">
             <Table2 className="h-4 w-4 text-accent" />
-            <span className="text-[13px] font-semibold">Vista previa</span>
-            <span className="text-[11.5px] text-ink-sub">· 50 primeras filas</span>
+            <span className="text-[14px] font-semibold">Vista previa</span>
+            <span className="text-[12px] text-ink-sub">50 primeras filas</span>
           </div>
           <Link
             href="/lab"
-            className="inline-flex items-center gap-1 text-[12px] font-medium text-accent ring-focus rounded-md"
+            className="inline-flex items-center gap-1 text-[13px] font-medium text-accent ring-focus rounded-md hover:underline"
           >
             Abrir en Laboratorio
             <ChevronRight className="h-3.5 w-3.5" />
           </Link>
         </div>
-        <div className="p-3">
+        <div className="p-4">
           {!preview ? (
-            <div className="grid h-24 place-items-center">
+            <div className="grid h-28 place-items-center">
               <RefreshCw className="h-4 w-4 animate-spin text-ink-sub" />
             </div>
           ) : (

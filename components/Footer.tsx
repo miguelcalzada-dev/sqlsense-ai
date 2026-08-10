@@ -3,20 +3,19 @@ import BrandMark from "./BrandMark";
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 mt-24 border-t border-line-soft">
-      <div className="mx-auto max-w-6xl px-4 py-12">
+    <footer className="relative z-10 mt-24 border-t border-white/5">
+      <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
               <BrandMark />
-              <span className="text-[15px] font-semibold tracking-tight">
-                SQLSense<span className="text-accent">.</span>
+              <span className="text-[15px] font-bold tracking-tight">
+                SQLSense<span className="text-gradient">.</span>
               </span>
             </div>
             <p className="mt-4 text-[13px] leading-relaxed text-ink-sub">
-              Aprende SQL traduciendo lenguaje natural ⇄ SQL. Laboratorio
-              efímero en tu navegador con SQLite WebAssembly. Proyecto de
-              portfolio de IA aplicada.
+              Aprende SQL traduciendo lenguaje natural a SQL con IA. Laboratorio
+              efímero en tu navegador con SQLite WebAssembly.
             </p>
           </div>
 
@@ -33,30 +32,26 @@ export default function Footer() {
             <FooterCol
               title="Recursos"
               items={[
-                {
-                  label: "GitHub",
-                  href: "https://github.com/miguelcalzada-dev",
-                  external: true,
-                },
+                { label: "GitHub", href: "https://github.com/miguelcalzada-dev", external: true },
+                { label: "Portfolio", href: "https://portfolio-miguelcalzada.vercel.app/", external: true },
                 { label: "SQLite WASM", href: "https://sql.js.org", external: true },
-                { label: "Next.js", href: "https://nextjs.org", external: true },
               ]}
             />
             <FooterCol
-              title="Tecnologías"
+              title="Stack"
               items={[
                 { label: "Next.js 14", href: "/", external: false },
                 { label: "TypeScript", href: "/", external: false },
-                { label: "Tailwind", href: "/", external: false },
-                { label: "Framer", href: "/", external: false },
+                { label: "Tailwind CSS", href: "/", external: false },
+                { label: "Framer Motion", href: "/", external: false },
               ]}
             />
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-line-soft pt-6 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-6 sm:flex-row sm:items-center">
           <p className="text-[12px] text-ink-sub">
-            © {new Date().getFullYear()} SQLSense AI · Hecho con cuidado por{" "}
+            &copy; {new Date().getFullYear()} SQLSense AI · Hecho por{" "}
             <a
               href="https://github.com/miguelcalzada-dev"
               target="_blank"

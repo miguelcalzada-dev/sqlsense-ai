@@ -41,10 +41,10 @@ export default function SqlExplainPanel({ sql }: Props) {
   }, [sql]);
 
   return (
-    <div className="card flex flex-col gap-3 p-4">
+    <div className="card flex flex-col gap-3 p-5 border-white/[0.06]">
       <div className="flex items-center gap-2">
         <MessageSquareQuote className="h-4 w-4 text-accent2" />
-        <h3 className="text-[14px] font-semibold">Explicar este SQL</h3>
+        <h3 className="text-[15px] font-semibold">Explicar este SQL</h3>
         <Button
           size="sm"
           variant="secondary"
@@ -58,7 +58,7 @@ export default function SqlExplainPanel({ sql }: Props) {
       </div>
 
       {!result && !loading && !error && (
-        <div className="rounded-apple border border-line-soft bg-bg-soft p-4 text-[12.5px] text-ink-sub">
+        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-[13px] text-ink-sub">
           Pulsa <span className="font-medium text-ink">Explicar</span> para que la
           IA te devuelva el equivalente en lenguaje natural, paso a paso.
         </div>
@@ -68,18 +68,18 @@ export default function SqlExplainPanel({ sql }: Props) {
         {loading ? (
           <motion.div
             key="l"
-            className="grid place-items-center gap-2 py-6"
+            className="grid place-items-center gap-2 py-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <Loader2 className="h-5 w-5 animate-spin text-accent" />
-            <p className="text-[12px] text-ink-sub">Interpretando…</p>
+            <p className="text-[13px] text-ink-sub">Interpretando...</p>
           </motion.div>
         ) : error ? (
           <motion.div
             key="e"
-            className="text-[13px] text-accent3"
+            className="text-[14px] text-accent3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
@@ -92,7 +92,7 @@ export default function SqlExplainPanel({ sql }: Props) {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <p className="text-[13.5px] leading-relaxed text-ink-soft">
+            <p className="text-[14px] leading-relaxed text-ink-soft">
               <Sparkles className="mr-1 inline h-3.5 w-3.5 text-accent" />
               {result.naturalLanguage}
             </p>
@@ -108,14 +108,14 @@ export default function SqlExplainPanel({ sql }: Props) {
             )}
 
             {result.steps.length > 0 && (
-              <ol className="space-y-1.5">
+              <ol className="space-y-2">
                 {result.steps.map((s, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[12.5px]">
-                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-bg-soft font-mono text-[10.5px] font-semibold text-ink-sub">
+                  <li key={i} className="flex items-start gap-2.5 text-[13px]">
+                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white/[0.06] font-mono text-[11px] font-semibold text-ink-sub">
                       {i + 1}
                     </span>
                     <span>
-                      <code className="font-mono text-[11.5px] font-semibold text-accent2">
+                      <code className="font-mono text-[12px] font-semibold text-accent2">
                         {s.clause}
                       </code>{" "}
                       <span className="text-ink-soft">{s.note}</span>
@@ -126,17 +126,17 @@ export default function SqlExplainPanel({ sql }: Props) {
             )}
 
             {result.citations.length > 0 && (
-              <details className="rounded-apple border border-line-soft bg-bg-soft p-3 text-[12px]">
+              <details className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-[13px]">
                 <summary className="cursor-pointer font-medium text-ink-soft">
                   Citas del SQL ({result.citations.length})
                 </summary>
                 <ul className="mt-2 space-y-1.5">
                   {result.citations.map((c, i) => (
                     <li key={i} className="text-ink-sub">
-                      <code className="font-mono text-[11px] text-accent">
+                      <code className="font-mono text-[12px] text-accent">
                         {c.clause}
                       </code>{" "}
-                      — {c.what}
+                      --- {c.what}
                     </li>
                   ))}
                 </ul>

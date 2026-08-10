@@ -17,20 +17,20 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-ink text-[rgb(var(--bg))] hover:opacity-90 active:scale-[0.98] shadow-sm",
+    "bg-gradient-to-r from-accent to-accent2 text-white hover:opacity-90 active:scale-[0.98] shadow-md shadow-accent/10",
   secondary:
-    "bg-surface text-ink border border-line hover:bg-bg-soft active:scale-[0.98]",
-  ghost: "text-ink-soft hover:text-ink hover:bg-bg-soft",
+    "bg-white/5 text-ink border border-white/10 hover:bg-white/10 active:scale-[0.98]",
+  ghost: "text-ink-soft hover:text-ink hover:bg-white/5",
   danger:
     "bg-accent3/10 text-accent3 border border-accent3/20 hover:bg-accent3/15",
   subtle:
-    "bg-bg-soft text-ink-soft hover:text-ink hover:bg-line-soft active:scale-[0.98]",
+    "bg-white/5 text-ink-soft hover:text-ink hover:bg-white/10 active:scale-[0.98]",
 };
 
 const SIZES: Record<Size, string> = {
   sm: "h-8 px-3 text-[13px] gap-1.5 rounded-lg",
-  md: "h-10 px-4 text-[14px] gap-2 rounded-apple",
-  lg: "h-12 px-6 text-[15px] gap-2.5 rounded-apple",
+  md: "h-10 px-4 text-[14px] gap-2 rounded-xl",
+  lg: "h-12 px-6 text-[15px] gap-2.5 rounded-xl",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(

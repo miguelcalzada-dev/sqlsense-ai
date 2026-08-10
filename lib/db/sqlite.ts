@@ -23,7 +23,6 @@ type State = {
   error: string | null;
   sqlJs: SqlJsStatic | null;
   db: Database | null;
-  /** Number of statements executed since last reset; useful for stats. */
   statementsRun: number;
 };
 
@@ -38,7 +37,7 @@ export type DBStore = State & Actions;
 
 let inflight: Promise<void> | null = null;
 
-async function instantiate(sqlJs: SqlJsStatic): Promise<Database> {
+function instantiate(sqlJs: SqlJsStatic): Database {
   const db = new sqlJs.Database();
   try {
     db.run(SCHEMA_DDL);
@@ -49,11 +48,7 @@ async function instantiate(sqlJs: SqlJsStatic): Promise<Database> {
     }
     db.run("COMMIT;");
   } catch (e) {
-    try {
-      db.run("ROLLBACK;");
-    } catch {
-      /* ignore */
-    }
+    try { db.run("ROLLBACK;"); } catch { /* ignore */ }
     throw e;
   }
   return db;
@@ -75,7 +70,7 @@ export const useDatabase = create<DBStore>((set, get) => ({
     inflight = (async () => {
       try {
         const sqlJs = await initSqlJs({ locateFile: () => SQL_WASM_CDN });
-        const db = await instantiate(sqlJs);
+        const db = instantiate(sqlJs);
         set({ status: "ready", sqlJs, db, error: null });
       } catch (e) {
         set({
@@ -93,16 +88,11 @@ export const useDatabase = create<DBStore>((set, get) => ({
   reset: async () => {
     const { sqlJs, db } = get();
     if (sqlJs && db) {
-      try {
-        db.close();
-      } catch {
-        /* ignore */
-      }
-      const fresh = await instantiate(sqlJs);
+      try { db.close(); } catch { /* ignore */ }
+      const fresh = instantiate(sqlJs);
       set({ db: fresh, statementsRun: 0, status: "ready", error: null });
       return;
     }
-    // Fallback: full re-init
     await get().init();
     set({ statementsRun: 0 });
   },
@@ -111,15 +101,9 @@ export const useDatabase = create<DBStore>((set, get) => ({
     const db = get().db;
     if (!db) return { error: "La base de datos aún no está lista." };
     if (!sql.trim()) {
-      return {
-        columns: [],
-        rows: [],
-        rowsAffected: 0,
-        ms: 0,
-      };
+      return { columns: [], rows: [], rowsAffected: 0, ms: 0 };
     }
-    const started =
-      typeof performance !== "undefined" ? performance.now() : Date.now();
+    const started = typeof performance !== "undefined" ? performance.now() : Date.now();
     try {
       const stmt = db.prepare(sql);
       let rows: unknown[][] = [];
@@ -131,21 +115,11 @@ export const useDatabase = create<DBStore>((set, get) => ({
       }
       stmt.free();
       const rowsAffected = db.getRowsModified();
-      const ended =
-        typeof performance !== "undefined" ? performance.now() : Date.now();
+      const ended = typeof performance !== "undefined" ? performance.now() : Date.now();
       set((s) => ({ statementsRun: s.statementsRun + 1 }));
-      return {
-        columns,
-        rows,
-        rowsAffected,
-        ms: Math.max(0, ended - started),
-      };
+      return { columns, rows, rowsAffected, ms: Math.max(0, ended - started) };
     } catch (e) {
-      const ended =
-        typeof performance !== "undefined" ? performance.now() : Date.now();
-      void ended;
-      const message =
-        e instanceof Error ? e.message : "Error ejecutando la consulta";
+      const message = e instanceof Error ? e.message : "Error ejecutando la consulta";
       return { error: message } as { error: string };
     }
   },
@@ -154,9 +128,7 @@ export const useDatabase = create<DBStore>((set, get) => ({
     const db = get().db;
     if (!db) return [];
     try {
-      const res = db.exec(
-        "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;",
-      );
+      const res = db.exec("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;");
       if (!res.length) return [];
       return res[0].values.map((r) => String(r[0]));
     } catch {
@@ -165,7 +137,6 @@ export const useDatabase = create<DBStore>((set, get) => ({
   },
 }));
 
-/** Hook pragmático para garantir la DB montada en cliente. */
 export function ensureDatabase(): Promise<void> {
   const store = useDatabase.getState();
   return store.init();
@@ -179,10 +150,11 @@ export async function executeWhenReady(
     return useDatabase.getState().execute(sql);
   } catch (e) {
     return {
-      error:
-        e instanceof Error
-          ? e.message
-          : "No se pudo inicializar la base de datos.",
+      error: e instanceof Error ? e.message : "No se pudo inicializar la base de datos.",
     };
   }
+}
+
+if (typeof window !== "undefined") {
+  void ensureDatabase();
 }
