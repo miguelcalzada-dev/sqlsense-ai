@@ -78,7 +78,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
         setLoading(false);
       }
     },
-    [execute],
+    [],
   );
 
   return (
