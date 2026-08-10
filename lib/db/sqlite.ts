@@ -6,7 +6,7 @@ import { SCHEMA_DDL } from "./schema";
 import { buildSeed } from "./seed";
 
 const SQL_WASM_CDN =
-  "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.wasm";
+  "https://cdn.jsdelivr.net/npm/sql.js@1.14.1/dist/sql-wasm.wasm";
 
 export type QueryResult = {
   columns: string[];

@@ -66,38 +66,38 @@ export default function LabPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10">
-      <header className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-accent to-accent2 shadow-lg shadow-accent/20">
-              <Beaker className="h-5 w-5 text-white" strokeWidth={2.4} />
-            </span>
-            <h1 className="text-[32px] font-bold tracking-tight">Laboratorio</h1>
-          </div>
-          <p className="mt-3 max-w-xl text-[15px] text-ink-sub">
-            Escribe SQL y ejecútalo contra la base de datos del concesionario. La
-            base de datos vive en tu navegador: reiníciala cuando quieras.
-          </p>
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <header className="mb-8 border-b-4 border-line pb-6">
+        <div className="flex items-center gap-3">
+          <span className="grid h-12 w-12 place-items-center border-4 border-line bg-accent shadow-brutal">
+            <Beaker className="h-6 w-6 text-white" strokeWidth={2.5} />
+          </span>
+          <h1 className="font-heading text-4xl uppercase">Laboratorio</h1>
         </div>
-        <StatusBadges status={status} error={error} statementsRun={statementsRun} />
+        <p className="mt-3 max-w-2xl font-mono text-xs uppercase tracking-wider text-sub">
+          Escribe SQL y ejecútalo contra la base de datos del concesionario. La
+          base de datos vive en tu navegador: reiníciala cuando quieras.
+        </p>
+        <div className="mt-4">
+          <StatusBadges status={status} error={error} statementsRun={statementsRun} />
+        </div>
       </header>
 
-      <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-        <section className="min-w-0 space-y-4">
-          <div className="card overflow-hidden border-white/[0.06]">
-            <div className="flex items-center gap-1 border-b border-white/[0.06] bg-white/[0.02] px-3 py-2">
+      <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <section className="min-w-0 space-y-6">
+          <div className="card p-0 overflow-hidden">
+            <div className="flex items-center gap-1 border-b-4 border-line bg-bg-soft px-3 py-2">
               <TabButton
                 active={tab === "editor"}
                 onClick={() => setTab("editor")}
-                icon={<Beaker className="h-3.5 w-3.5" />}
+                icon={<Beaker className="h-4 w-4" />}
               >
                 Editor SQL
               </TabButton>
               <TabButton
                 active={tab === "ai"}
                 onClick={() => setTab("ai")}
-                icon={<Sparkles className="h-3.5 w-3.5" />}
+                icon={<Sparkles className="h-4 w-4" />}
               >
                 Generar con IA
               </TabButton>
@@ -106,32 +106,32 @@ export default function LabPage() {
                   type="button"
                   onClick={() => void run()}
                   disabled={status !== "ready" || running}
-                  className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-r from-accent to-accent2 px-4 text-[13px] font-semibold text-white ring-focus transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+                  className="inline-flex h-10 items-center gap-2 border-4 border-line bg-accent px-4 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-brutal-sm transition-all hover:bg-[#e63800] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 disabled:opacity-50"
                 >
                   {running ? (
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <Play className="h-3.5 w-3.5" fill="currentColor" />
+                    <Play className="h-4 w-4" fill="currentColor" />
                   )}
                   Ejecutar
                 </button>
                 <button
                   type="button"
                   onClick={() => void reset().catch(() => undefined)}
-                  className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-[12px] font-medium text-ink-soft ring-focus hover:text-ink hover:border-white/20 transition-colors"
+                  className="inline-flex h-10 items-center gap-2 border-4 border-line bg-surface px-3 font-mono text-xs font-bold uppercase tracking-wider shadow-brutal-sm transition-all hover:bg-bg-soft active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
                   aria-label="Reiniciar base de datos"
                   title="Reiniciar base de datos"
                 >
-                  <RotateCcw className="h-3.5 w-3.5" />
+                  <RotateCcw className="h-4 w-4" />
                 </button>
               </div>
             </div>
 
             {tab === "editor" ? (
-              <div className="p-4">
+              <div className="p-5">
                 {status === "error" && error && (
-                  <div className="mb-3 rounded-xl border border-accent3/20 bg-accent3/5 px-3 py-2 text-[13px] text-accent3">
-                    SQLite no pudo iniciarse: {error}. Comprueba la conexión y pulsa reiniciar.
+                  <div className="mb-4 border-4 border-accent-3 bg-accent-3/10 px-4 py-3 font-mono text-xs uppercase tracking-wider text-accent-3 shadow-brutal-sm">
+                    SQLite no pudo iniciarse: {error}
                   </div>
                 )}
                 <SqlEditor
@@ -141,8 +141,8 @@ export default function LabPage() {
                   onRun={() => void run()}
                   minHeight={220}
                 />
-                <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="text-[12px] text-ink-sub">Snippets:</span>
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider">Snippets:</span>
                   {SNIPPETS.map((s) => (
                     <button
                       key={s.label}
@@ -157,24 +157,24 @@ export default function LabPage() {
                     </button>
                   ))}
                 </div>
-                <p className="mt-2 text-[12px] text-ink-sub">
+                <p className="mt-3 font-mono text-xs uppercase tracking-wider text-sub">
                   Ctrl + Enter para ejecutar
                 </p>
               </div>
             ) : (
-              <div className="p-4">
+              <div className="p-5">
                 <NLLabPanel onUseSQL={setEditorSQL} />
               </div>
             )}
           </div>
 
           <div>
-            <div className="mb-3 flex items-center gap-2 text-[14px] font-semibold text-ink-soft">
+            <div className="mb-3 flex items-center gap-2 font-mono text-sm font-bold uppercase tracking-wider">
               <Database className="h-4 w-4" />
               Resultado
             </div>
             {!result ? (
-              <div className="grid h-36 place-items-center rounded-2xl border border-dashed border-white/10 bg-white/[0.02] text-[14px] text-ink-sub">
+              <div className="grid h-40 place-items-center border-4 border-dashed border-line bg-bg-soft font-mono text-xs uppercase tracking-wider text-sub">
                 Ejecuta una consulta para ver el resultado aquí.
               </div>
             ) : (
@@ -183,37 +183,37 @@ export default function LabPage() {
           </div>
         </section>
 
-        <aside className="min-w-0 space-y-4">
+        <aside className="min-w-0 space-y-6">
           <SqlExplainPanel sql={sql} />
 
-          <div className="card p-5 border-white/[0.06]">
+          <div className="card p-5">
             <div className="flex items-center gap-2">
-              <ListTree className="h-4 w-4 text-accent2" />
-              <h3 className="text-[15px] font-semibold">Esquema rápido</h3>
+              <ListTree className="h-4 w-4" />
+              <h3 className="font-heading text-lg uppercase">Esquema rápido</h3>
               <Link
                 href="/data"
-                className="ml-auto text-[12px] font-medium text-accent ring-focus rounded-md hover:underline"
+                className="ml-auto font-mono text-xs font-bold uppercase tracking-wider text-accent hover:underline"
               >
-                Ver completo
+                Ver completo →
               </Link>
             </div>
             <ul className="mt-4 space-y-2">
               {SCHEMA.map((t) => (
                 <li
                   key={t.name}
-                  className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2.5 hover:border-white/10 transition-colors"
+                  className="flex items-center gap-3 border-2 border-line bg-bg-soft px-3 py-2.5 shadow-brutal-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal"
                 >
                   <span
-                    className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[15px]"
-                    style={{ background: `${t.color}1a` }}
+                    className="grid h-9 w-9 shrink-0 place-items-center border-2 border-line text-lg"
+                    style={{ background: `${t.color}30` }}
                   >
                     {t.emoji}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <div className="font-mono text-[13px] font-semibold">
+                    <div className="font-mono text-sm font-bold uppercase">
                       {t.name}
                     </div>
-                    <div className="truncate text-[12px] text-ink-sub">
+                    <div className="truncate font-mono text-xs text-sub">
                       {t.columns
                         .map((c) => c.name)
                         .slice(0, 4)
@@ -247,10 +247,10 @@ function TabButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "inline-flex h-9 items-center gap-1.5 rounded-lg px-4 text-[13px] font-medium ring-focus transition-colors",
+        "inline-flex h-10 items-center gap-2 border-2 px-4 font-mono text-xs font-bold uppercase tracking-wider transition-all",
         active
-          ? "bg-white/[0.08] text-ink border border-white/[0.08]"
-          : "text-ink-sub hover:text-ink",
+          ? "border-line bg-surface shadow-brutal-sm"
+          : "border-transparent hover:border-line hover:bg-surface/50",
       )}
     >
       {icon}
@@ -270,30 +270,30 @@ function StatusBadges({
 }) {
   const ready = status === "ready";
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-3">
       <span
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-medium",
+          "inline-flex items-center gap-2 border-2 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wider shadow-brutal-sm",
           ready
-            ? "border-accent4/30 bg-accent4/10 text-accent4"
-            : "border-white/10 bg-white/5 text-ink-sub",
+            ? "border-line bg-accent-4 text-white"
+            : "border-line bg-bg-soft",
         )}
       >
         <span
           className={cn(
-            "h-1.5 w-1.5 rounded-full",
-            ready ? "bg-accent4" : "bg-ink-sub animate-pulse",
+            "h-2 w-2",
+            ready ? "bg-white" : "bg-sub animate-pulse",
           )}
         />
         {ready ? "SQLite WASM listo" : status === "error" ? "SQLite no disponible" : "Cargando..."}
       </span>
       {status === "error" && error && (
-        <span className="max-w-[240px] truncate text-[11px] text-accent3" title={error}>
+        <span className="max-w-[240px] truncate font-mono text-xs text-accent-3" title={error}>
           {error}
         </span>
       )}
       {ready && (
-        <span className="pill text-ink-sub">
+        <span className="pill">
           {formatNumber(statementsRun)} consultas
         </span>
       )}

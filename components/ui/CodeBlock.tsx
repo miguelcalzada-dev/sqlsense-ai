@@ -6,16 +6,16 @@ import { highlightTokens } from "@/lib/sql-highlight";
 import { cn } from "@/lib/utils";
 
 const COLOR: Record<string, CSSProperties> = {
-  keyword: { color: "rgb(var(--accent-2))", fontWeight: 600 },
-  function: { color: "rgb(var(--accent-5))", fontWeight: 600 },
-  type: { color: "rgb(var(--accent-4))", fontStyle: "italic" },
-  string: { color: "rgb(var(--accent-4))" },
-  number: { color: "rgb(var(--accent-5))" },
-  ident: { color: "rgb(var(--ink))" },
-  identifier: { color: "rgb(var(--ink-soft))" },
-  comment: { color: "rgb(var(--sub))", fontStyle: "italic" },
-  punct: { color: "rgb(var(--ink-soft))" },
-  other: { color: "rgb(var(--ink-soft))" },
+  keyword: { color: "#ff3e00", fontWeight: 700 },
+  function: { color: "#2400ff", fontWeight: 700 },
+  type: { color: "#00994d", fontStyle: "italic" },
+  string: { color: "#00994d" },
+  number: { color: "#2400ff" },
+  ident: { color: "#111" },
+  identifier: { color: "#333" },
+  comment: { color: "#777", fontStyle: "italic" },
+  punct: { color: "#333" },
+  other: { color: "#333" },
   ws: {},
 };
 
@@ -34,24 +34,19 @@ export default function CodeBlock({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-apple border border-line-soft bg-[#0c0c0f] text-[13px] font-mono",
+        "group relative overflow-hidden border-4 border-line bg-bg-soft font-mono text-sm shadow-brutal-sm",
         className,
       )}
     >
       {title && (
-        <div className="flex items-center justify-between border-b border-white/5 px-3 py-2">
-          <span className="text-[11px] font-medium uppercase tracking-wider text-white/40">
+        <div className="flex items-center justify-between border-b-2 border-line px-3 py-2 bg-bg-tertiary">
+          <span className="font-mono text-xs font-bold uppercase tracking-wider">
             {title}
           </span>
-          {showCopy && (
-            <CopyButton
-              text={code}
-              className="border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20"
-            />
-          )}
+          {showCopy && <CopyButton text={code} />}
         </div>
       )}
-      <pre className="overflow-x-auto px-4 py-3 leading-relaxed text-[rgb(245,245,248)]">
+      <pre className="overflow-x-auto px-4 py-3 leading-relaxed text-ink">
         <code>
           {tokens.map((t, i) => {
             if (t.type === "ws") return <span key={i}>{t.value}</span>;
@@ -65,10 +60,7 @@ export default function CodeBlock({
       </pre>
       {!title && showCopy && (
         <div className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100">
-          <CopyButton
-            text={code}
-            className="border-white/10 bg-black/40 text-white/70 hover:text-white hover:border-white/20"
-          />
+          <CopyButton text={code} />
         </div>
       )}
     </div>

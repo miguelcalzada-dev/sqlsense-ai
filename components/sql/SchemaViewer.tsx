@@ -51,50 +51,50 @@ export default function SchemaViewer() {
   const count = rows && "columns" in rows ? Number(rows.rows[0]?.[0] ?? 0) : null;
 
   return (
-    <div className="grid min-w-0 gap-5 lg:grid-cols-[280px_minmax(0,1fr)]">
-      <aside className="card p-3 border-white/[0.06]">
+    <div className="grid min-w-0 gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+      <aside className="card p-3">
         <div className="flex items-center gap-2 px-2 py-2">
-          <Database className="h-4 w-4 text-accent" />
-          <span className="text-[14px] font-semibold">Tablas</span>
+          <Database className="h-4 w-4" />
+          <span className="font-mono text-sm font-bold uppercase tracking-wider">Tablas</span>
         </div>
-        <div className="relative mt-1">
-          <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-sub" />
+        <div className="relative mt-2">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-sub" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Filtrar tablas..."
-            className="input-base w-full pl-9 pr-3 py-2.5 text-[13px]"
+            className="input-base w-full pl-10 pr-3 py-2.5 font-mono text-xs"
           />
         </div>
-        <ul className="mt-2 space-y-1">
+        <ul className="mt-3 space-y-1">
           {filtered.map((t) => (
             <li key={t.name}>
               <button
                 type="button"
                 onClick={() => setActive(t.name)}
                 className={cn(
-                  "flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left text-[13px] ring-focus transition-colors",
+                  "flex w-full items-center gap-2.5 border-2 px-2.5 py-2.5 text-left font-mono text-xs font-bold uppercase tracking-wider transition-all",
                   active === t.name
-                    ? "bg-white/[0.06] text-ink"
-                    : "text-ink-soft hover:bg-white/[0.04] hover:text-ink",
+                    ? "border-line bg-bg-soft shadow-brutal-sm"
+                    : "border-transparent hover:border-line hover:bg-bg-soft/50",
                 )}
               >
                 <span
-                  className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[15px]"
-                  style={{ background: `${t.color}1a` }}
+                  className="grid h-8 w-8 shrink-0 place-items-center border-2 border-line text-sm"
+                  style={{ background: `${t.color}30` }}
                 >
                   {t.emoji}
                 </span>
                 <span className="flex-1">
-                  <span className="block font-mono text-[13px] font-medium">{t.name}</span>
-                  <span className="block text-[11px] text-ink-sub">{t.columns.length} columnas</span>
+                  <span className="block font-bold">{t.name}</span>
+                  <span className="block text-sub font-normal normal-case tracking-normal">{t.columns.length} columnas</span>
                 </span>
                 <ChevronRight className="h-3.5 w-3.5 opacity-40" />
               </button>
             </li>
           ))}
           {!filtered.length && (
-            <li className="px-2 py-3 text-center text-[13px] text-ink-sub">
+            <li className="px-2 py-3 text-center font-mono text-xs uppercase tracking-wider text-sub">
               Sin coincidencias
             </li>
           )}
@@ -125,29 +125,29 @@ function TableDetail({
   }, [table.name, status, runSQL]);
 
   return (
-    <div className="space-y-5">
-      <div className="card overflow-hidden border-white/[0.06]">
-        <div className="flex items-start gap-3 border-b border-white/[0.06] p-5">
+    <div className="space-y-6">
+      <div className="card overflow-hidden">
+        <div className="flex items-start gap-4 border-b-4 border-line p-5">
           <span
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-xl text-[22px]"
-            style={{ background: `${table.color}1a` }}
+            className="grid h-14 w-14 shrink-0 place-items-center border-4 border-line text-2xl shadow-brutal-sm"
+            style={{ background: `${table.color}30` }}
           >
             {table.emoji}
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <h3 className="truncate text-[16px] font-semibold">{table.label}</h3>
-              <code className="rounded-md bg-white/[0.06] px-2 py-0.5 font-mono text-[12px] text-ink-sub">
+              <h3 className="font-heading text-xl uppercase">{table.label}</h3>
+              <code className="border-2 border-line bg-bg-soft px-2 py-0.5 font-mono text-xs font-bold">
                 {table.name}
               </code>
             </div>
-            <p className="mt-1 text-[13px] text-ink-sub">{table.desc}</p>
+            <p className="mt-1 font-body text-sm text-sub">{table.desc}</p>
           </div>
           <div className="text-right">
-            <div className="text-[11px] uppercase tracking-wider text-ink-sub">
+            <div className="font-mono text-xs font-bold uppercase tracking-wider text-sub">
               Filas
             </div>
-            <div className="font-mono text-[20px] font-bold tabular-nums text-ink">
+            <div className="font-heading text-3xl tabular-nums">
               {count === null ? "---" : formatNumber(count)}
             </div>
           </div>
@@ -158,42 +158,42 @@ function TableDetail({
             <div
               key={c.name}
               className={cn(
-                "border-b border-white/[0.06] p-4",
-                (i + 1) % 3 !== 0 && "lg:border-r",
-                (i + 1) % 2 !== 0 && "sm:border-r lg:border-r-0",
+                "border-b-2 border-line p-4",
+                (i + 1) % 3 !== 0 && "lg:border-r-2",
+                (i + 1) % 2 !== 0 && "sm:border-r-2 lg:border-r-0",
               )}
             >
               <div className="flex items-center gap-2">
                 {c.pk ? (
-                  <Key className="h-3.5 w-3.5 text-accent5" />
+                  <Key className="h-3.5 w-3.5 text-accent-5" />
                 ) : c.fk ? (
-                  <Link2 className="h-3.5 w-3.5 text-accent2" />
+                  <Link2 className="h-3.5 w-3.5 text-accent-2" />
                 ) : (
-                  <span className="ml-1 h-1.5 w-1.5 rounded-full bg-ink-sub/40" />
+                  <span className="ml-1 h-2 w-2 bg-sub/40" />
                 )}
-                <code className="font-mono text-[13px] font-semibold text-ink">
+                <code className="font-mono text-sm font-bold">
                   {c.name}
                 </code>
-                <span className="ml-auto font-mono text-[11px] uppercase text-ink-sub">
+                <span className="ml-auto font-mono text-xs font-bold uppercase text-sub">
                   {c.type}
                 </span>
               </div>
-              <p className="mt-2 text-[12px] leading-snug text-ink-sub">
+              <p className="mt-2 font-body text-xs leading-snug text-sub">
                 {c.desc}
               </p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {c.pk && (
-                  <span className="chip border-accent5/20 bg-accent5/10 text-accent5">
+                  <span className="pill !bg-accent-5 !text-white !border-line">
                     PRIMARY KEY
                   </span>
                 )}
                 {c.fk && (
-                  <span className="chip border-accent2/20 bg-accent2/10 text-accent2">
+                  <span className="pill !bg-accent-2 !text-white !border-line">
                     {c.fk.table}.{c.fk.column}
                   </span>
                 )}
                 {c.notNull && !c.pk && (
-                  <span className="pill text-[10px] text-ink-sub">NOT NULL</span>
+                  <span className="pill">NOT NULL</span>
                 )}
               </div>
             </div>
@@ -201,25 +201,24 @@ function TableDetail({
         </div>
       </div>
 
-      <div className="card overflow-hidden border-white/[0.06]">
-        <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
+      <div className="card overflow-hidden">
+        <div className="flex items-center justify-between border-b-4 border-line px-4 py-3 bg-bg-soft">
           <div className="flex items-center gap-2">
-            <Table2 className="h-4 w-4 text-accent" />
-            <span className="text-[14px] font-semibold">Vista previa</span>
-            <span className="text-[12px] text-ink-sub">50 primeras filas</span>
+            <Table2 className="h-4 w-4" />
+            <span className="font-mono text-sm font-bold uppercase tracking-wider">Vista previa</span>
+            <span className="font-mono text-xs text-sub">50 primeras filas</span>
           </div>
           <Link
             href="/lab"
-            className="inline-flex items-center gap-1 text-[13px] font-medium text-accent ring-focus rounded-md hover:underline"
+            className="font-mono text-xs font-bold uppercase tracking-wider text-accent hover:underline"
           >
-            Abrir en Laboratorio
-            <ChevronRight className="h-3.5 w-3.5" />
+            Abrir en Laboratorio →
           </Link>
         </div>
         <div className="p-4">
           {!preview ? (
             <div className="grid h-28 place-items-center">
-              <RefreshCw className="h-4 w-4 animate-spin text-ink-sub" />
+              <RefreshCw className="h-5 w-5 animate-spin text-sub" />
             </div>
           ) : (
             <ResultTable result={preview} />

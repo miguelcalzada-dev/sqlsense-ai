@@ -1,11 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +23,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#09090b",
+  themeColor: "#eae8e3",
 };
 
 export default function RootLayout({
@@ -36,13 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="dark" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider>
-          <Navbar />
-          <main className="relative z-10 pt-20">{children}</main>
-          <Footer />
-        </ThemeProvider>
+    <html lang="es">
+      <body className="font-body">
+        <Navbar />
+        <main className="relative z-10 pt-24">{children}</main>
+        <Footer />
       </body>
     </html>
   );

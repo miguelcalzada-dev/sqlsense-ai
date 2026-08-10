@@ -60,10 +60,8 @@ const SqlEditor = forwardRef<SqlEditorHandle, Props>(function SqlEditor(
   return (
     <div
       className={cn(
-        "rounded-apple border bg-[#0c0c0f] transition-all duration-200",
-        focused
-          ? "border-[rgba(var(--accent),0.5)] shadow-[0_0_0_4px_rgba(var(--accent),0.12)]"
-          : "border-line-soft hover:border-line",
+        "border-4 border-line bg-bg transition-all duration-100",
+        focused && "bg-bg-soft",
         className,
       )}
     >
@@ -97,7 +95,7 @@ const SqlEditor = forwardRef<SqlEditorHandle, Props>(function SqlEditor(
             );
           }
         }}
-        className="block min-h-0 w-full resize-y overflow-auto bg-transparent px-4 py-3 font-mono text-[13px] leading-relaxed text-white caret-white outline-none placeholder:text-white/30"
+        className="block min-h-0 w-full resize-y overflow-auto bg-transparent px-4 py-3 font-mono text-sm leading-relaxed text-ink outline-none placeholder:text-sub/50"
         style={{ minHeight }}
       />
     </div>

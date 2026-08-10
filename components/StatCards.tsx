@@ -10,16 +10,16 @@ type Card = {
   key: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  rgb: string;
+  color: string;
   isMoney?: boolean;
 };
 
 const CARDS: Card[] = [
-  { key: "marcas", label: "Marcas", icon: Tags, rgb: "139,92,246" },
-  { key: "coches", label: "Coches", icon: Boxes, rgb: "6,182,212" },
-  { key: "clientes", label: "Clientes", icon: Boxes, rgb: "244,63,94" },
-  { key: "ventas", label: "Ventas", icon: ShoppingCart, rgb: "16,185,129" },
-  { key: "ingresos", label: "Ingresos totales", icon: TrendingUp, rgb: "245,158,11", isMoney: true },
+  { key: "marcas", label: "Marcas", icon: Tags, color: "#2400ff" },
+  { key: "coches", label: "Coches", icon: Boxes, color: "#ff3e00" },
+  { key: "clientes", label: "Clientes", icon: Boxes, color: "#e60000" },
+  { key: "ventas", label: "Ventas", icon: ShoppingCart, color: "#00994d" },
+  { key: "ingresos", label: "Ingresos totales", icon: TrendingUp, color: "#ffb800", isMoney: true },
 ];
 
 export default function StatCards() {
@@ -51,7 +51,7 @@ export default function StatCards() {
   }, [ready, execute]);
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
       {CARDS.map((c, i) => {
         const Icon = c.icon;
         const value = data[c.key] ?? null;
@@ -61,18 +61,18 @@ export default function StatCards() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            className="card p-5 border-white/[0.06]"
+            className="card p-5"
           >
             <div
-              className="grid h-10 w-10 place-items-center rounded-xl"
-              style={{ background: `rgba(${c.rgb},0.12)`, color: `rgba(${c.rgb},1)` }}
+              className="grid h-11 w-11 place-items-center border-2 border-line shadow-brutal-sm"
+              style={{ background: `${c.color}25` }}
             >
-              <Icon className="h-5 w-5" />
+              <Icon className="h-5 w-5" style={{ color: c.color }} />
             </div>
-            <p className="mt-3 text-[11px] font-medium uppercase tracking-wider text-ink-sub">
+            <p className="mt-3 font-mono text-xs font-bold uppercase tracking-wider text-sub">
               {c.label}
             </p>
-            <p className="mt-1 font-mono text-[24px] font-bold tabular-nums text-ink">
+            <p className="mt-1 font-heading text-3xl tabular-nums">
               {value === null
                 ? "---"
                 : c.isMoney

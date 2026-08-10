@@ -3,17 +3,17 @@ import BrandMark from "./BrandMark";
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 mt-24 border-t border-white/5">
+    <footer className="mt-24 border-t-4 border-line bg-bg-soft">
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <BrandMark />
-              <span className="text-[15px] font-bold tracking-tight">
+              <span className="font-heading text-2xl uppercase">
                 SQLSense<span className="text-gradient">.</span>
               </span>
             </div>
-            <p className="mt-4 text-[13px] leading-relaxed text-ink-sub">
+            <p className="mt-4 font-mono text-xs uppercase tracking-wider text-sub">
               Aprende SQL traduciendo lenguaje natural a SQL con IA. Laboratorio
               efímero en tu navegador con SQLite WebAssembly.
             </p>
@@ -24,7 +24,7 @@ export default function Footer() {
               title="App"
               items={[
                 { label: "Laboratorio", href: "/lab" },
-                { label: "Datos & Esquema", href: "/data" },
+                { label: "Datos", href: "/data" },
                 { label: "Retos", href: "/challenges" },
                 { label: "Guía", href: "/guide" },
               ]}
@@ -40,29 +40,26 @@ export default function Footer() {
             <FooterCol
               title="Stack"
               items={[
-                { label: "Next.js 14", href: "/", external: false },
-                { label: "TypeScript", href: "/", external: false },
-                { label: "Tailwind CSS", href: "/", external: false },
-                { label: "Framer Motion", href: "/", external: false },
+                { label: "Next.js 14", href: "/" },
+                { label: "TypeScript", href: "/" },
+                { label: "Tailwind CSS", href: "/" },
+                { label: "Framer Motion", href: "/" },
               ]}
             />
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-6 sm:flex-row sm:items-center">
-          <p className="text-[12px] text-ink-sub">
+        <div className="mt-10 border-t-2 border-line pt-6">
+          <p className="font-mono text-xs uppercase tracking-wider text-sub text-center">
             &copy; {new Date().getFullYear()} SQLSense AI · Hecho por{" "}
             <a
               href="https://github.com/miguelcalzada-dev"
               target="_blank"
               rel="noreferrer"
-              className="link-underline font-medium text-ink-soft"
+              className="font-bold text-ink hover:text-accent transition-colors"
             >
               Miguel Calzada
             </a>
-          </p>
-          <p className="text-[12px] text-ink-sub">
-            Base de datos efímera · No se envían tus datos al servidor
           </p>
         </div>
       </div>
@@ -79,10 +76,10 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h4 className="text-[11px] font-semibold uppercase tracking-wider text-ink-sub">
+      <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-ink mb-3">
         {title}
       </h4>
-      <ul className="mt-3 space-y-2">
+      <ul className="space-y-2">
         {items.map((item) => (
           <li key={item.label}>
             {item.external ? (
@@ -90,14 +87,14 @@ function FooterCol({
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[13px] text-ink-soft transition-colors hover:text-ink"
+                className="font-mono text-xs uppercase tracking-wider text-sub hover:text-accent transition-colors"
               >
                 {item.label}
               </a>
             ) : (
               <Link
                 href={item.href}
-                className="text-[13px] text-ink-soft transition-colors hover:text-ink"
+                className="font-mono text-xs uppercase tracking-wider text-sub hover:text-accent transition-colors"
               >
                 {item.label}
               </Link>

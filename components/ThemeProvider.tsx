@@ -1,21 +1,17 @@
 "use client";
 
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 
-type Theme = "dark";
+type Theme = "light";
 
 const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({
-  theme: "dark",
+  theme: "light",
   toggle: () => {},
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
-
   return (
-    <ThemeContext.Provider value={{ theme: "dark", toggle: () => {} }}>
+    <ThemeContext.Provider value={{ theme: "light", toggle: () => {} }}>
       {children}
     </ThemeContext.Provider>
   );

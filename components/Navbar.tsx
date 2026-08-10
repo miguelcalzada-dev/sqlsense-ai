@@ -2,16 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import {
-  Beaker,
-  BookOpen,
-  Database,
-  Trophy,
-  Menu,
-  X,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Beaker, BookOpen, Database, Trophy, Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import BrandMark from "./BrandMark";
 
@@ -24,41 +17,16 @@ const NAV = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "py-2" : "py-3",
-      )}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 border-b-4 border-line bg-bg">
       <div className="mx-auto max-w-7xl px-4">
-        <nav
-          className={cn(
-            "flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-300",
-            scrolled
-              ? "glass shadow-lg"
-              : "border border-white/5 bg-surface/50 backdrop-blur-sm",
-          )}
-        >
-          <Link href="/" className="group flex items-center gap-2.5 ring-focus rounded-full">
+        <nav className="flex h-16 items-center justify-between">
+          <Link href="/" className="flex items-center gap-3 ring-focus">
             <BrandMark />
-            <span className="text-[15px] font-bold tracking-tight text-ink">
-              SQLSense
-              <span className="text-gradient">.</span>
+            <span className="font-heading text-2xl uppercase tracking-tight">
+              SQLSense<span className="text-gradient">.</span>
             </span>
           </Link>
 
@@ -71,30 +39,23 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors ring-focus",
+                    "flex items-center gap-2 border-2 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wider transition-all",
                     active
-                      ? "text-ink"
-                      : "text-ink-sub hover:text-ink",
+                      ? "border-line bg-surface shadow-brutal-sm"
+                      : "border-transparent hover:border-line hover:bg-surface",
                   )}
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 -z-10 rounded-full bg-white/[0.06] border border-white/[0.08]"
-                      transition={{ type: "spring", bounce: 0.18, duration: 0.5 }}
-                    />
-                  )}
-                  <Icon className="h-3.5 w-3.5 opacity-70" strokeWidth={2.2} />
+                  <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />
                   {item.label}
                 </Link>
               );
             })}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link
               href="/lab"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent2 px-4 py-2 text-[13px] font-semibold text-white ring-focus hover:opacity-90 transition-opacity"
+              className="hidden sm:inline-flex brutal-btn brutal-btn-primary !py-2 !px-4 !text-xs"
             >
               Abrir laboratorio
             </Link>
@@ -102,7 +63,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="Menú"
-              className="md:hidden grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 ring-focus"
+              className="md:hidden grid h-10 w-10 place-items-center border-2 border-line bg-surface shadow-brutal-sm"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -112,11 +73,11 @@ export default function Navbar() {
         <AnimatePresence>
           {open && (
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden mt-2 card p-2"
+              className="md:hidden border-t-2 border-line pb-3"
             >
               {NAV.map((item) => {
                 const Icon = item.icon;
@@ -125,19 +86,21 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => setOpen(false)}
                     className={cn(
-                      "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ring-focus",
-                      active ? "bg-white/[0.06] text-ink" : "text-ink-soft",
+                      "flex items-center gap-3 px-3 py-3 font-mono text-sm font-bold uppercase tracking-wider border-b border-line/20",
+                      active ? "bg-surface" : "hover:bg-surface/50",
                     )}
                   >
-                    <Icon className="h-4 w-4 opacity-80" />
+                    <Icon className="h-4 w-4" />
                     {item.label}
                   </Link>
                 );
               })}
               <Link
                 href="/lab"
-                className="mt-1 flex items-center justify-center rounded-xl bg-gradient-to-r from-accent to-accent2 px-3 py-2.5 text-sm font-semibold text-white"
+                onClick={() => setOpen(false)}
+                className="mt-3 flex items-center justify-center brutal-btn brutal-btn-primary !text-xs"
               >
                 Abrir laboratorio
               </Link>

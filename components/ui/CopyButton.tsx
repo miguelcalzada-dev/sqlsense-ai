@@ -39,12 +39,12 @@ export function CopyButton({
       }}
       aria-label="Copiar"
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-lg border border-line-soft bg-surface px-2 py-1 text-[11.5px] font-medium text-ink-sub ring-focus transition-colors hover:text-ink hover:border-line",
+        "inline-flex items-center gap-1.5 border-2 border-line bg-surface px-2 py-1 font-mono text-xs font-bold uppercase tracking-wider shadow-brutal-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal",
         className,
       )}
     >
       {copied ? (
-        <Check className="h-3.5 w-3.5 text-accent4" />
+        <Check className="h-3.5 w-3.5 text-accent-4" />
       ) : (
         <Copy className="h-3.5 w-3.5" />
       )}

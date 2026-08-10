@@ -161,21 +161,19 @@ export default function ChallengesPage() {
   }, [active, sql]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10">
-      <header className="mb-8">
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <header className="mb-8 border-b-4 border-line pb-6">
         <div className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-accent3 to-accent5 shadow-lg shadow-accent3/20">
-            <Trophy className="h-5 w-5 text-white" strokeWidth={2.4} />
+          <span className="grid h-12 w-12 place-items-center border-4 border-line bg-accent-5 shadow-brutal">
+            <Trophy className="h-6 w-6 text-white" strokeWidth={2.5} />
           </span>
-          <h1 className="text-[32px] font-bold tracking-tight">Retos</h1>
+          <h1 className="font-heading text-4xl uppercase">Retos</h1>
         </div>
-        <p className="mt-3 max-w-2xl text-[15px] text-ink-sub">
-          Practica SQL con{" "}
-          <span className="font-semibold text-ink">{CHALLENGES.length} retos</span>{" "}
-          divididos en cuatro niveles. La validacion es automatica.
+        <p className="mt-3 max-w-2xl font-mono text-xs uppercase tracking-wider text-sub">
+          Practica SQL con <span className="font-bold text-ink">{CHALLENGES.length} retos</span> divididos en cuatro niveles. La validacion es automatica.
         </p>
-        <div className="mt-3 text-[13px] text-ink-sub">
-          Completados: <span className="font-semibold text-ink">{completed.size}</span> / {CHALLENGES.length}
+        <div className="mt-3 font-mono text-xs uppercase tracking-wider">
+          Completados: <span className="font-bold text-ink">{completed.size}</span> / {CHALLENGES.length}
         </div>
       </header>
 
@@ -190,30 +188,22 @@ export default function ChallengesPage() {
               type="button"
               onClick={() => setActiveDiff(d)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-medium ring-focus transition-colors",
+                "inline-flex items-center gap-2 border-4 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider shadow-brutal-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal",
                 activeDiff === d
-                  ? "border-transparent text-ink"
-                  : "border-white/10 bg-white/5 text-ink-sub hover:text-ink",
+                  ? "border-line bg-accent text-white"
+                  : "border-line bg-surface",
               )}
-              style={
-                activeDiff === d
-                  ? {
-                      background: `rgba(${hexToRgb(meta.color)},0.14)`,
-                      borderColor: `rgba(${hexToRgb(meta.color)},0.3)`,
-                    }
-                  : undefined
-              }
             >
               <span>{meta.emoji}</span>
               {d}
-              <span className="text-[11px] opacity-60">{done}/{count}</span>
+              <span className="opacity-60">{done}/{count}</span>
             </button>
           );
         })}
       </div>
 
-      <div className="grid min-w-0 gap-5 lg:grid-cols-[300px_minmax(0,1fr)]">
-        <aside className="space-y-1.5">
+      <div className="grid min-w-0 gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
+        <aside className="space-y-1">
           {grouped[activeDiff].map((c) => {
             const done = completed.has(c.id);
             const meta = DIFFICULTY_META[c.difficulty];
@@ -224,27 +214,27 @@ export default function ChallengesPage() {
                 type="button"
                 onClick={() => onSelect(c)}
                 className={cn(
-                  "group flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left ring-focus transition-all",
+                  "group flex w-full items-center gap-3 border-2 px-3 py-3 text-left transition-all",
                   isActive
-                    ? "border-white/15 bg-white/[0.06]"
-                    : "border-white/[0.06] bg-surface hover:border-white/10 hover:bg-white/[0.04]",
+                    ? "border-line bg-bg-soft shadow-brutal-sm"
+                    : "border-line bg-surface hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal",
                 )}
               >
                 <span
-                  className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[14px]"
-                  style={{ background: `rgba(${hexToRgb(meta.color)},0.12)` }}
+                  className="grid h-9 w-9 shrink-0 place-items-center border-2 border-line text-sm"
+                  style={{ background: `${hexToColor(meta.color)}25` }}
                 >
                   {done ? (
-                    <CheckCircle2 className="h-4 w-4" style={{ color: meta.color }} />
+                    <CheckCircle2 className="h-4 w-4" style={{ color: hexToColor(meta.color) }} />
                   ) : (
                     meta.emoji
                   )}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[13px] font-medium">{c.title}</span>
+                  <span className="block truncate font-body text-sm font-medium">{c.title}</span>
                   <span className="mt-0.5 flex flex-wrap gap-1">
                     {c.tags.slice(0, 2).map((t) => (
-                      <span key={t} className="font-mono text-[10px] text-ink-sub">
+                      <span key={t} className="font-mono text-[10px] font-bold uppercase text-sub">
                         #{t.toLowerCase()}
                       </span>
                     ))}
@@ -252,7 +242,7 @@ export default function ChallengesPage() {
                 </span>
                 <ChevronRight
                   className={cn(
-                    "h-4 w-4 text-ink-sub transition-transform",
+                    "h-4 w-4 text-sub transition-transform",
                     isActive && "translate-x-0.5 text-ink",
                   )}
                 />
@@ -261,57 +251,57 @@ export default function ChallengesPage() {
           })}
         </aside>
 
-        <section className="min-w-0 space-y-4">
-          <div className="card p-6 border-white/[0.06]">
+        <section className="min-w-0 space-y-5">
+          <div className="card p-6">
             <div className="flex flex-wrap items-start gap-2">
-              <h2 className="text-[22px] font-bold">{active.title}</h2>
+              <h2 className="font-heading text-2xl uppercase">{active.title}</h2>
               <span className="ml-auto">
-                <Badge color={`rgb(${DIFFICULTY_META[active.difficulty].color})`}>
+                <Badge color={hexToColor(DIFFICULTY_META[active.difficulty].color)}>
                   {DIFFICULTY_META[active.difficulty].emoji} {active.difficulty}
                 </Badge>
               </span>
             </div>
-            <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+            <p className="mt-3 font-body text-sm leading-relaxed text-ink-soft">
               {active.prompt}
             </p>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {active.tags.map((t) => (
-                <span key={t} className="rounded-md bg-white/[0.06] px-2 py-0.5 font-mono text-[11px] text-ink-sub">
+                <span key={t} className="border-2 border-line bg-bg-soft px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
                   #{t}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="card overflow-hidden border-white/[0.06]">
-            <div className="flex items-center gap-1 border-b border-white/[0.06] bg-white/[0.02] px-3 py-2">
-              <span className="px-2 text-[13px] font-medium text-ink-soft">
+          <div className="card overflow-hidden p-0">
+            <div className="flex items-center gap-1 border-b-4 border-line bg-bg-soft px-3 py-2">
+              <span className="px-2 font-mono text-xs font-bold uppercase tracking-wider">
                 Tu solucion
               </span>
               <div className="ml-auto flex items-center gap-2 pr-1">
                 <button
                   type="button"
                   onClick={() => void run(sql)}
-                  className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 text-[13px] font-semibold text-ink ring-focus hover:bg-white/10"
+                  className="inline-flex h-10 items-center gap-2 border-4 border-line bg-surface px-4 font-mono text-xs font-bold uppercase tracking-wider shadow-brutal-sm transition-all hover:bg-bg-soft active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
                 >
-                  <Play className="h-3.5 w-3.5" />
+                  <Play className="h-4 w-4" />
                   Probar
                 </button>
                 <button
                   type="button"
                   onClick={() => void validate()}
-                  className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-r from-accent to-accent2 px-4 text-[13px] font-semibold text-white ring-focus hover:opacity-90"
+                  className="inline-flex h-10 items-center gap-2 border-4 border-line bg-accent px-4 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-brutal-sm transition-all hover:bg-[#e63800] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <CheckCircle2 className="h-4 w-4" />
                   Validar
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowHint((v) => !v)}
-                  className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-accent5/30 bg-accent5/10 px-3 text-[13px] font-medium text-accent5 ring-focus hover:bg-accent5/15"
+                  className="inline-flex h-10 items-center gap-2 border-4 border-line bg-accent-5 px-4 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-brutal-sm transition-all hover:bg-accent-5/90 active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
                   title="Ver pista"
                 >
-                  <Lightbulb className="h-3.5 w-3.5" />
+                  <Lightbulb className="h-4 w-4" />
                   Pista
                 </button>
               </div>
@@ -331,13 +321,13 @@ export default function ChallengesPage() {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden border-t border-white/[0.06]"
+                  className="overflow-hidden border-t-4 border-line"
                 >
-                  <div className="flex items-start gap-2 bg-accent5/5 px-4 py-3 text-[14px] text-ink-soft">
-                    <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-accent5" />
+                  <div className="flex items-start gap-2 bg-accent-5/10 px-4 py-3 font-body text-sm text-ink-soft">
+                    <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-accent-5" />
                     <span>{active.hint}</span>
                   </div>
-                  <div className="border-t border-accent5/15 px-4 py-2 text-right">
+                  <div className="border-t-2 border-accent-5/20 px-4 py-2 text-right">
                     <button
                       type="button"
                       onClick={() => {
@@ -345,7 +335,7 @@ export default function ChallengesPage() {
                         setResult(null);
                         setVerdict(null);
                       }}
-                      className="inline-flex items-center gap-1 text-[12px] font-medium text-ink-sub ring-focus rounded-md hover:text-ink"
+                      className="inline-flex items-center gap-1 font-mono text-xs font-bold uppercase tracking-wider text-sub hover:text-ink"
                     >
                       <RefreshCw className="h-3 w-3" /> Reiniciar codigo
                     </button>
@@ -363,10 +353,10 @@ export default function ChallengesPage() {
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={cn(
-                      "mb-3 flex items-center gap-2 rounded-xl border px-4 py-3 text-[14px] font-medium",
+                      "mb-3 flex items-center gap-2 border-4 px-4 py-3 font-mono text-xs font-bold uppercase tracking-wider shadow-brutal-sm",
                       verdict.ok
-                        ? "border-accent4/30 bg-accent4/10 text-accent4"
-                        : "border-accent3/25 bg-accent3/5 text-accent3",
+                        ? "border-line bg-accent-4 text-white"
+                        : "border-line bg-accent-3 text-white",
                     )}
                   >
                     {verdict.ok ? (
@@ -376,7 +366,7 @@ export default function ChallengesPage() {
                     )}
                     <span>{verdict.reason}</span>
                     {verdict.ok && (
-                      <span className="ml-auto text-[12px] font-normal opacity-80">
+                      <span className="ml-auto font-body text-xs font-normal normal-case tracking-normal opacity-90">
                         {active.successMessage}
                       </span>
                     )}
@@ -388,9 +378,9 @@ export default function ChallengesPage() {
           )}
 
           {!result && status !== "ready" && (
-            <div className="grid h-36 place-items-center rounded-2xl border border-dashed border-white/10 bg-white/[0.02] text-[14px] text-ink-sub">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="mt-2">Cargando SQLite...</span>
+            <div className="grid h-40 place-items-center border-4 border-dashed border-line bg-bg-soft">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span className="mt-2 font-mono text-xs uppercase tracking-wider">Cargando SQLite...</span>
             </div>
           )}
         </section>
@@ -399,13 +389,13 @@ export default function ChallengesPage() {
   );
 }
 
-function hexToRgb(input: string): string {
+function hexToColor(input: string): string {
   const map: Record<string, string> = {
-    "var(--accent-4)": "16,185,129",
-    "var(--accent)": "6,182,212",
-    "var(--accent-2)": "139,92,246",
-    "var(--accent-3)": "244,63,94",
-    "var(--accent-5)": "245,158,11",
+    "var(--accent-4)": "#00994d",
+    "var(--accent)": "#ff3e00",
+    "var(--accent-2)": "#2400ff",
+    "var(--accent-3)": "#e60000",
+    "var(--accent-5)": "#ffb800",
   };
-  return map[input] ?? "6,182,212";
+  return map[input] ?? "#ff3e00";
 }

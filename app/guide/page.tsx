@@ -134,23 +134,23 @@ export default function GuidePage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10">
-      <header className="mb-8">
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <header className="mb-8 border-b-4 border-line pb-6">
         <div className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-accent4 to-accent shadow-lg shadow-accent4/20">
-            <BookOpen className="h-5 w-5 text-white" strokeWidth={2.4} />
+          <span className="grid h-12 w-12 place-items-center border-4 border-line bg-accent-4 shadow-brutal">
+            <BookOpen className="h-6 w-6 text-white" strokeWidth={2.5} />
           </span>
-          <h1 className="text-[32px] font-bold tracking-tight">Guia</h1>
+          <h1 className="font-heading text-4xl uppercase">Guia</h1>
         </div>
-        <p className="mt-3 max-w-2xl text-[15px] text-ink-sub">
+        <p className="mt-3 max-w-2xl font-mono text-xs uppercase tracking-wider text-sub">
           Aprende SQL de forma visual: cada concepto se explica con ejemplos
           ejecutables que puedes lanzar contra la base de datos del laboratorio.
         </p>
       </header>
 
-      <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
-        <aside className="card p-3 lg:sticky lg:top-24 lg:self-start border-white/[0.06]">
-          <div className="px-2 py-2 text-[11px] font-semibold uppercase tracking-wider text-ink-sub">
+      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <aside className="card p-3 lg:sticky lg:top-28 lg:self-start">
+          <div className="px-2 py-2 font-mono text-xs font-bold uppercase tracking-wider">
             Temas
           </div>
           <ul className="space-y-1">
@@ -163,17 +163,17 @@ export default function GuidePage() {
                     type="button"
                     onClick={() => setActiveTopic(t)}
                     className={cn(
-                      "flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left ring-focus transition-colors",
+                      "flex w-full items-center gap-2.5 border-2 px-2.5 py-2.5 text-left transition-all",
                       isActive
-                        ? "bg-white/[0.06] text-ink"
-                        : "text-ink-soft hover:bg-white/[0.04] hover:text-ink",
+                        ? "border-line bg-bg-soft shadow-brutal-sm"
+                        : "border-transparent hover:border-line hover:bg-bg-soft/50",
                     )}
                   >
-                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/[0.04] text-[15px]">
+                    <span className="grid h-8 w-8 shrink-0 place-items-center border-2 border-line bg-bg-soft text-sm">
                       {t.emoji}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[13px] font-medium">{t.title}</span>
+                      <span className="block truncate font-mono text-xs font-bold uppercase tracking-wider">{t.title}</span>
                     </span>
                     <Icon className="h-3.5 w-3.5 opacity-40" />
                   </button>
@@ -183,36 +183,36 @@ export default function GuidePage() {
           </ul>
           <Link
             href="/lab"
-            className="mt-3 flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-accent to-accent2 px-3 py-2.5 text-[13px] font-semibold text-white ring-focus hover:opacity-90"
+            className="mt-4 flex items-center justify-center gap-2 brutal-btn brutal-btn-primary !text-xs w-full"
           >
-            <TerminalSquare className="h-3.5 w-3.5" />
+            <TerminalSquare className="h-4 w-4" />
             Practicar en el laboratorio
           </Link>
         </aside>
 
-        <section className="space-y-5">
-          <div className="card p-6 border-white/[0.06]">
-            <div className="flex items-center gap-3">
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/[0.04] text-[22px]">
+        <section className="space-y-6">
+          <div className="card p-6">
+            <div className="flex items-center gap-4">
+              <span className="grid h-14 w-14 place-items-center border-4 border-line bg-bg-soft text-2xl shadow-brutal-sm">
                 {activeTopic.emoji}
               </span>
               <div>
-                <h2 className="text-[24px] font-bold">{activeTopic.title}</h2>
-                <p className="text-[14px] text-ink-sub">{activeTopic.desc}</p>
+                <h2 className="font-heading text-2xl uppercase">{activeTopic.title}</h2>
+                <p className="font-mono text-xs uppercase tracking-wider text-sub">{activeTopic.desc}</p>
               </div>
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-5 md:grid-cols-2">
             {staticContent.map((c, i) => (
-              <article key={i} className="card p-5 border-white/[0.06]">
-                <p className="text-[14px] leading-relaxed text-ink-soft">
+              <article key={i} className="card p-5">
+                <p className="font-body text-sm leading-relaxed text-ink-soft">
                   {c.summary}
                 </p>
                 <div className="mt-3">
                   <CodeBlock code={c.sql} title="Ejemplo" />
                 </div>
-                <p className="mt-2 text-[13px] text-ink-sub">
+                <p className="mt-3 font-mono text-xs uppercase tracking-wider text-sub">
                   <Sparkles className="mr-1 inline h-3 w-3 text-accent" />
                   {c.desc}
                 </p>
@@ -237,10 +237,10 @@ export default function GuidePage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="card grid place-items-center gap-2 py-12 border-white/[0.06]"
+                className="card grid place-items-center gap-3 py-12"
               >
-                <Loader2 className="h-5 w-5 animate-spin text-accent" />
-                <p className="text-[14px] text-ink-sub">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <p className="font-mono text-xs uppercase tracking-wider">
                   La IA esta preparando el tema...
                 </p>
               </motion.div>
@@ -249,7 +249,7 @@ export default function GuidePage() {
                 key="error"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="card p-5 text-[14px] text-accent3 border-white/[0.06]"
+                className="card border-accent-3 p-5 font-mono text-xs uppercase tracking-wider text-accent-3"
               >
                 {error}
               </motion.div>
@@ -258,39 +258,39 @@ export default function GuidePage() {
                 key="ai"
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="card p-6 border-white/[0.06]"
+                className="card p-6"
               >
                 <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-accent" />
-                  <h3 className="text-[16px] font-semibold">
+                  <Sparkles className="h-4 w-4" />
+                  <h3 className="font-heading text-lg uppercase">
                     Explicacion de la IA
                   </h3>
                   <span
                     className={cn(
-                      "ml-auto rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider",
+                      "ml-auto pill",
                       aiContent.source === "openai"
-                        ? "bg-accent2/10 text-accent2 border border-accent2/20"
-                        : "bg-white/5 text-ink-sub border border-white/10",
+                        ? "!bg-accent-2 !text-white"
+                        : "",
                     )}
                   >
                     {aiContent.source === "openai" ? "OpenAI" : "Local"}
                   </span>
                 </div>
-                <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+                <p className="mt-4 font-body text-sm leading-relaxed text-ink-soft">
                   {aiContent.summary}
                 </p>
 
                 {aiContent.concepts.length > 0 && (
-                  <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     {aiContent.concepts.map((c, i) => (
                       <div
                         key={i}
-                        className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+                        className="border-2 border-line bg-bg-soft p-4 shadow-brutal-sm"
                       >
-                        <div className="font-mono text-[12px] font-semibold text-accent2">
+                        <div className="font-mono text-xs font-bold uppercase text-accent-2">
                           {c.term}
                         </div>
-                        <p className="mt-1 text-[13px] text-ink-sub">
+                        <p className="mt-1 font-body text-xs text-sub">
                           {c.definition}
                         </p>
                       </div>
@@ -303,8 +303,8 @@ export default function GuidePage() {
                     {aiContent.examples.map((ex, i) => (
                       <div key={i}>
                         <CodeBlock code={ex.sql} title={`Ejemplo ${i + 1}`} />
-                        <p className="mt-2 text-[13px] text-ink-sub">
-                          <Lightbulb className="mr-1 inline h-3 w-3 text-accent5" />
+                        <p className="mt-2 font-mono text-xs uppercase tracking-wider text-sub">
+                          <Lightbulb className="mr-1 inline h-3 w-3 text-accent-5" />
                           {ex.desc}
                         </p>
                         <Button
@@ -327,12 +327,12 @@ export default function GuidePage() {
 
           {preview && (
             <div>
-              <div className="mb-3 flex items-center gap-2 text-[14px] font-semibold text-ink-soft">
+              <div className="mb-3 flex items-center gap-2 font-mono text-sm font-bold uppercase tracking-wider">
                 <Database className="h-4 w-4" />
                 Resultado en el laboratorio
                 <Link
                   href="/lab"
-                  className="ml-auto inline-flex items-center gap-1 text-[13px] font-medium text-accent ring-focus rounded-md hover:underline"
+                  className="ml-auto inline-flex items-center gap-1 font-mono text-xs font-bold uppercase tracking-wider text-accent hover:underline"
                 >
                   Abrir editor
                   <ChevronRight className="h-3.5 w-3.5" />
@@ -342,21 +342,21 @@ export default function GuidePage() {
             </div>
           )}
 
-          <div className="card flex items-center justify-between gap-3 p-5 border-white/[0.06]">
+          <div className="card flex items-center justify-between gap-4 p-5">
             <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/[0.04] text-[18px]">
+              <span className="grid h-11 w-11 place-items-center border-4 border-line bg-bg-soft text-xl shadow-brutal-sm">
                 🎓
               </span>
               <div>
-                <p className="text-[14px] font-semibold">Listo para practicar?</p>
-                <p className="text-[13px] text-ink-sub">
+                <p className="font-heading text-lg uppercase">Listo para practicar?</p>
+                <p className="font-mono text-xs uppercase tracking-wider text-sub">
                   Pon a prueba lo aprendido con retos por dificultad.
                 </p>
               </div>
             </div>
             <Link
               href="/challenges"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-accent to-accent2 px-5 py-2.5 text-[13px] font-semibold text-white ring-focus hover:opacity-90"
+              className="brutal-btn brutal-btn-primary !text-xs"
             >
               Ir a retos
               <ArrowRight className="h-3.5 w-3.5" />

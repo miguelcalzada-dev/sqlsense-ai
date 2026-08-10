@@ -83,9 +83,9 @@ export default function NLLabPanel({ onUseSQL }: Props) {
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-accent" />
-          <h3 className="text-[15px] font-semibold">Pregunta en lenguaje natural</h3>
-          <span className="ml-auto text-[12px] text-ink-sub">
+          <Sparkles className="h-4 w-4" />
+          <h3 className="font-heading text-lg uppercase">Pregunta en lenguaje natural</h3>
+          <span className="ml-auto font-mono text-xs font-bold uppercase tracking-wider text-sub">
             IA &harr; SQL
           </span>
         </div>
@@ -101,7 +101,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
           }}
           rows={4}
           placeholder="Ej. Cuantos coches rojos se vendieron en 2019?"
-          className="input-base w-full resize-none px-4 py-3.5 text-[15px] leading-relaxed"
+          className="input-base w-full resize-none font-body text-base"
         />
 
         <div className="flex max-w-full flex-wrap gap-2">
@@ -113,14 +113,14 @@ export default function NLLabPanel({ onUseSQL }: Props) {
                 setQuery(ex);
                 void runTranslate(ex);
               }}
-              className="chip shrink-0 transition-transform hover:scale-105 active:scale-95"
+              className="chip shrink-0"
             >
               {ex}
             </button>
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button
             size="lg"
             loading={loading}
@@ -145,22 +145,22 @@ export default function NLLabPanel({ onUseSQL }: Props) {
             <RotateCcw className="h-4 w-4" />
           </Button>
         </div>
-        <p className="text-[12px] text-ink-sub">
+        <p className="font-mono text-xs uppercase tracking-wider text-sub">
           Ctrl + Enter para ejecutar
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
+      <div className="flex flex-col gap-4 border-4 border-line bg-bg-soft p-5 shadow-brutal">
         <div className="flex items-center gap-2">
-          <Wand2 className="h-4 w-4 text-accent2" />
-          <h3 className="text-[15px] font-semibold">Resultado IA</h3>
+          <Wand2 className="h-4 w-4" />
+          <h3 className="font-heading text-lg uppercase">Resultado IA</h3>
           {result && (
             <span
               className={cn(
-                "ml-auto rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider",
+                "ml-auto pill",
                 result.source === "openai"
-                  ? "bg-accent2/10 text-accent2 border border-accent2/20"
-                  : "bg-white/5 text-ink-sub border border-white/10",
+                  ? "!bg-accent-2 !text-white"
+                  : "",
               )}
             >
               {result.source === "openai" ? "OpenAI" : "Local"}
@@ -175,17 +175,17 @@ export default function NLLabPanel({ onUseSQL }: Props) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid place-items-center gap-2 py-12"
+              className="grid place-items-center gap-3 py-12"
             >
-              <Loader2 className="h-6 w-6 animate-spin text-accent" />
-              <p className="text-[13px] text-ink-sub">Pensando...</p>
+              <Loader2 className="h-6 w-6 animate-spin" />
+              <p className="font-mono text-xs uppercase tracking-wider">Pensando...</p>
             </motion.div>
           ) : error ? (
             <motion.div
               key="error"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="rounded-xl border border-accent3/20 bg-accent3/5 p-4 text-[14px] text-accent3"
+              className="border-4 border-accent-3 bg-accent-3/10 p-4 font-mono text-xs uppercase tracking-wider text-accent-3 shadow-brutal-sm"
             >
               {error}
             </motion.div>
@@ -196,21 +196,18 @@ export default function NLLabPanel({ onUseSQL }: Props) {
               animate={{ opacity: 1, y: 0 }}
               className="flex flex-col gap-4"
             >
-              <p className="text-[14px] leading-relaxed text-ink-soft">
+              <p className="font-body text-sm leading-relaxed text-ink-soft">
                 {result.summary}
               </p>
 
-              <div className="rounded-xl border border-white/[0.06] bg-[#0a0a0d] p-4 font-mono text-[13px] leading-relaxed text-[rgb(237,237,240)]">
+              <div className="border-4 border-line bg-bg p-4 font-mono text-sm leading-relaxed shadow-brutal-sm">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="text-[11px] uppercase tracking-wider text-white/40">
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-sub">
                     SQL generado
                   </span>
-                  <CopyButton
-                    text={result.sql}
-                    className="border-white/10 bg-white/5 text-white/70 hover:text-white hover:border-white/20"
-                  />
+                  <CopyButton text={result.sql} />
                 </div>
-                <pre className="overflow-x-auto whitespace-pre">
+                <pre className="overflow-x-auto whitespace-pre text-ink">
                   {result.sql || "---"}
                 </pre>
               </div>
@@ -218,15 +215,15 @@ export default function NLLabPanel({ onUseSQL }: Props) {
               {result.steps.length > 0 && (
                 <ol className="space-y-2">
                   {result.steps.map((s, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-[13px]">
-                      <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white/[0.06] font-mono text-[11px] font-semibold text-ink-sub">
+                    <li key={i} className="flex items-start gap-3 font-body text-sm">
+                      <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center border-2 border-line bg-bg-soft font-mono text-xs font-bold">
                         {i + 1}
                       </span>
                       <span>
-                        <code className="font-mono text-[12px] font-semibold text-accent2">
+                        <code className="font-mono text-xs font-bold text-accent-2">
                           {s.clause}
                         </code>{" "}
-                        <span className="text-ink-soft">{s.note}</span>
+                        <span className="text-sub">{s.note}</span>
                       </span>
                     </li>
                   ))}
@@ -235,8 +232,8 @@ export default function NLLabPanel({ onUseSQL }: Props) {
 
               {preview && (
                 <div className="mt-2">
-                  <div className="mb-2 flex items-center gap-2 text-[12px] text-ink-sub">
-                    <Play className="h-3.5 w-3.5 text-accent4" />
+                  <div className="mb-2 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider">
+                    <Play className="h-3.5 w-3.5" />
                     Ejecutado en laboratorio
                   </div>
                   <ResultTable result={preview} />
@@ -260,10 +257,10 @@ export default function NLLabPanel({ onUseSQL }: Props) {
               key="empty"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="grid place-items-center gap-2 py-12"
+              className="grid place-items-center gap-3 py-12"
             >
-              <Lightbulb className="h-7 w-7 text-ink-sub/40" />
-              <p className="text-center text-[13px] text-ink-sub">
+              <Lightbulb className="h-8 w-8 text-sub/40" />
+              <p className="text-center font-mono text-xs uppercase tracking-wider text-sub">
                 Escribe tu pregunta o pulsa un ejemplo para ver la magia.
               </p>
             </motion.div>
