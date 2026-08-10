@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 type Card = {
   key: string;
   label: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   color: string;
   isMoney?: boolean;
 };
