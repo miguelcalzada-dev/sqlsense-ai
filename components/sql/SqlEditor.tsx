@@ -60,8 +60,8 @@ const SqlEditor = forwardRef<SqlEditorHandle, Props>(function SqlEditor(
   return (
     <div
       className={cn(
-        "border-4 border-line bg-[#1a1a1e] transition-all duration-100",
-        focused && "border-accent",
+        "border-4 border-line bg-bg-tertiary transition-all duration-100",
+        focused && "border-accent bg-surface",
         className,
       )}
     >
@@ -95,7 +95,7 @@ const SqlEditor = forwardRef<SqlEditorHandle, Props>(function SqlEditor(
             );
           }
         }}
-        className="block min-h-0 w-full resize-y overflow-auto bg-transparent px-4 py-3 font-mono text-sm leading-relaxed text-[#e4e4e7] caret-[#ff3e00] outline-none placeholder:text-white/20"
+        className="block min-h-0 w-full resize-y overflow-auto bg-transparent px-4 py-3 font-mono text-sm leading-relaxed text-ink caret-accent outline-none placeholder:text-sub/40"
         style={{ minHeight }}
       />
     </div>

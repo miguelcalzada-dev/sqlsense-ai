@@ -6,16 +6,16 @@ import { highlightTokens } from "@/lib/sql-highlight";
 import { cn } from "@/lib/utils";
 
 const COLOR: Record<string, CSSProperties> = {
-  keyword: { color: "#ff6b6b", fontWeight: 700 },
-  function: { color: "#7c8dff", fontWeight: 700 },
-  type: { color: "#4ade80", fontStyle: "italic" },
-  string: { color: "#4ade80" },
-  number: { color: "#fbbf24" },
-  ident: { color: "#e4e4e7" },
-  identifier: { color: "#a1a1aa" },
-  comment: { color: "#71717a", fontStyle: "italic" },
-  punct: { color: "#a1a1aa" },
-  other: { color: "#a1a1aa" },
+  keyword: { color: "#cc3300", fontWeight: 700 },
+  function: { color: "#2400ff", fontWeight: 700 },
+  type: { color: "#008055", fontStyle: "italic" },
+  string: { color: "#008055" },
+  number: { color: "#b86e00" },
+  ident: { color: "#111" },
+  identifier: { color: "#444" },
+  comment: { color: "#888", fontStyle: "italic" },
+  punct: { color: "#444" },
+  other: { color: "#444" },
   ws: {},
 };
 
@@ -34,7 +34,7 @@ export default function CodeBlock({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden border-4 border-line bg-[#1a1a1e] font-mono text-sm shadow-brutal-sm",
+        "group relative overflow-hidden border-4 border-line bg-bg-tertiary font-mono text-sm shadow-brutal-sm",
         className,
       )}
     >
@@ -46,7 +46,7 @@ export default function CodeBlock({
           {showCopy && <CopyButton text={code} />}
         </div>
       )}
-      <pre className="overflow-x-auto px-4 py-3 leading-relaxed text-[#e4e4e7]">
+      <pre className="overflow-x-auto px-4 py-3 leading-relaxed text-ink">
         <code>
           {tokens.map((t, i) => {
             if (t.type === "ws") return <span key={i}>{t.value}</span>;
