@@ -128,6 +128,21 @@ function Hero() {
             Ver la guía
           </Link>
         </div>
+
+        <div className="mt-12 grid grid-cols-3 gap-4 max-w-2xl">
+          <div className="card p-4 text-center">
+            <div className="font-heading text-3xl text-accent">15</div>
+            <div className="font-mono text-xs uppercase tracking-wider text-sub mt-1">Tablas</div>
+          </div>
+          <div className="card p-4 text-center">
+            <div className="font-heading text-3xl text-accent-2">22</div>
+            <div className="font-mono text-xs uppercase tracking-wider text-sub mt-1">Retos</div>
+          </div>
+          <div className="card p-4 text-center">
+            <div className="font-heading text-3xl text-accent-4">∞</div>
+            <div className="font-mono text-xs uppercase tracking-wider text-sub mt-1">Consultas</div>
+          </div>
+        </div>
       </motion.div>
 
       <motion.div
