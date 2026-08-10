@@ -52,3 +52,5 @@ export function CopyButton({
     </button>
   );
 }
+
+export default CopyButton;
