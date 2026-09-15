@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Se sirve bajo https://miguelcalzada.com/sqlsense
+  basePath: "/sqlsense",
   reactStrictMode: true,
   webpack: (config) => {
     config.resolve.alias = { ...config.resolve.alias };

@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://miguelcalzada.com"),
+  alternates: { canonical: "https://miguelcalzada.com/sqlsense" },
   title: {
     default: "SQLSense AI — Aprende SQL hablando con IA",
     template: "%s · SQLSense AI",

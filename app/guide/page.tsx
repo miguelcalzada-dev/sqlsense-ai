@@ -106,7 +106,7 @@ export default function GuidePage() {
       const ctrl = new AbortController();
       abortRef.current = ctrl;
       try {
-        const res = await fetch("/api/teach", {
+        const res = await fetch("/sqlsense/api/teach", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ topic: topic.topic }),

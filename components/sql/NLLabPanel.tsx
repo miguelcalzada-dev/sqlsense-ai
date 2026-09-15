@@ -56,7 +56,7 @@ export default function NLLabPanel({ onUseSQL }: Props) {
       const ctrl = new AbortController();
       abortRef.current = ctrl;
       try {
-        const res = await fetch("/api/translate", {
+        const res = await fetch("/sqlsense/api/translate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query: trimmed }),

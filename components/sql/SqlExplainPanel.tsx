@@ -24,7 +24,7 @@ export default function SqlExplainPanel({ sql }: Props) {
     const ctrl = new AbortController();
     abortRef.current = ctrl;
     try {
-      const res = await fetch("/api/explain", {
+      const res = await fetch("/sqlsense/api/explain", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sql }),
