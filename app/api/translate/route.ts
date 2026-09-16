@@ -3,6 +3,7 @@ import { translatePrompt } from "@/lib/ai/prompts";
 import { chatJSON } from "@/lib/ai/openai";
 import { localTranslate } from "@/lib/ai/local";
 import type { TranslateResponse } from "@/lib/ai/types";
+import { checkRateLimit } from "@/lib/ai/rateLimit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,6 +11,13 @@ export const dynamic = "force-dynamic";
 type Body = { query?: unknown };
 
 export async function POST(req: NextRequest) {
+  const limit = checkRateLimit(req);
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: "Demasiadas peticiones. Intentalo de nuevo en unos segundos." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } },
+    );
+  }
   let body: Body;
   try {
     body = (await req.json()) as Body;
