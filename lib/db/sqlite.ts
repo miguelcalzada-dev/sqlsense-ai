@@ -5,8 +5,20 @@ import initSqlJs, { type Database, type SqlJsStatic } from "sql.js";
 import { SCHEMA_DDL } from "./schema";
 import { buildSeed } from "./seed";
 
+// El binario se sirve localmente (public/sql-wasm.wasm) para no depender de un
+// CDN externo en tiempo de ejecucion. Se mantiene el CDN como fallback.
+const SQL_WASM_LOCAL =
+  process.env.NEXT_PUBLIC_SQL_WASM_URL || "/sqlsense/sql-wasm.wasm";
 const SQL_WASM_CDN =
   "https://cdn.jsdelivr.net/npm/sql.js@1.14.1/dist/sql-wasm.wasm";
+
+async function initSqlJsWithFallback(): Promise<SqlJsStatic> {
+  try {
+    return await initSqlJs({ locateFile: () => SQL_WASM_LOCAL });
+  } catch {
+    return initSqlJs({ locateFile: () => SQL_WASM_CDN });
+  }
+}
 
 export type QueryResult = {
   columns: string[];
@@ -69,7 +81,7 @@ export const useDatabase = create<DBStore>((set, get) => ({
     set({ status: "loading", error: null });
     inflight = (async () => {
       try {
-        const sqlJs = await initSqlJs({ locateFile: () => SQL_WASM_CDN });
+        const sqlJs = await initSqlJsWithFallback();
         const db = instantiate(sqlJs);
         set({ status: "ready", sqlJs, db, error: null });
       } catch (e) {
