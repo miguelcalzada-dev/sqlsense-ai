@@ -125,14 +125,14 @@ function Hero() {
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
-          <Link
+          <Link prefetch={false}
             href="/lab"
             className="brutal-btn brutal-btn-primary group"
           >
             Abrir el laboratorio
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
-          <Link
+          <Link prefetch={false}
             href="/guide"
             className="brutal-btn brutal-btn-secondary"
           >
@@ -325,14 +325,14 @@ function CTA() {
           cinco segundos.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link
+          <Link prefetch={false}
             href="/lab"
             className="brutal-btn brutal-btn-primary group"
           >
             Empezar ahora
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
-          <Link
+          <Link prefetch={false}
             href="/challenges"
             className="brutal-btn brutal-btn-secondary"
           >
