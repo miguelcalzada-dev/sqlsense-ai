@@ -1,14 +1,22 @@
 /** @type {import('next').NextConfig} */
+const NO_SNIFF = { key: "X-Content-Type-Options", value: "nosniff" };
+// Las paginas HTML no deben cachearse: miguelcalzada.com las sirve por rewrite y,
+// con el s-maxage largo que Next da a las paginas estaticas, un deploy nuevo no se
+// veia hasta que expiraba la cache (monograma/estilos desincronizados).
+const NO_STORE = { key: "Cache-Control", value: "public, max-age=0, s-maxage=0, must-revalidate" };
+
 const nextConfig = {
   // Se sirve bajo https://miguelcalzada.com/sqlsense
   basePath: "/sqlsense",
   reactStrictMode: true,
 
   headers: async () => [
-    {
-      source: "/(.*)",
-      headers: [{ key: "X-Content-Type-Options", value: "nosniff" }],
-    },
+    { source: "/", headers: [NO_SNIFF, NO_STORE] },
+    { source: "/lab", headers: [NO_SNIFF, NO_STORE] },
+    { source: "/data", headers: [NO_SNIFF, NO_STORE] },
+    { source: "/challenges", headers: [NO_SNIFF, NO_STORE] },
+    { source: "/guide", headers: [NO_SNIFF, NO_STORE] },
+    { source: "/(.*)", headers: [NO_SNIFF] },
   ],
 
   // Las URLs antiguas (sqlsense-ai-production.up.railway.app) redirigen al dominio nuevo.
