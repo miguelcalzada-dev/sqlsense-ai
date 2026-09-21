@@ -181,7 +181,7 @@ export default function GuidePage() {
               );
             })}
           </ul>
-          <Link
+          <Link prefetch={false}
             href="/lab"
             className="mt-4 flex items-center justify-center gap-2 brutal-btn brutal-btn-primary !text-xs w-full"
           >
@@ -330,7 +330,7 @@ export default function GuidePage() {
               <div className="mb-3 flex items-center gap-2 font-mono text-sm font-bold uppercase tracking-wider">
                 <Database className="h-4 w-4" />
                 Resultado en el laboratorio
-                <Link
+                <Link prefetch={false}
                   href="/lab"
                   className="ml-auto inline-flex items-center gap-1 font-mono text-xs font-bold uppercase tracking-wider text-accent hover:underline"
                 >
@@ -354,7 +354,7 @@ export default function GuidePage() {
                 </p>
               </div>
             </div>
-            <Link
+            <Link prefetch={false}
               href="/challenges"
               className="brutal-btn brutal-btn-primary !text-xs"
             >
