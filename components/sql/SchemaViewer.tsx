@@ -167,7 +167,7 @@ function TableDetail({
                 {c.pk ? (
                   <Key className="h-3.5 w-3.5 text-accent-5" />
                 ) : c.fk ? (
-                  <Link prefetch={false}2 className="h-3.5 w-3.5 text-accent-2" />
+                  <Link2 className="h-3.5 w-3.5 text-accent-2" />
                 ) : (
                   <span className="ml-1 h-2 w-2 bg-sub/40" />
                 )}
