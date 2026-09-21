@@ -190,7 +190,7 @@ export default function LabPage() {
             <div className="flex items-center gap-2">
               <ListTree className="h-4 w-4" />
               <h3 className="font-heading text-lg uppercase">Esquema rápido</h3>
-              <Link
+              <Link prefetch={false}
                 href="/data"
                 className="ml-auto font-mono text-xs font-bold uppercase tracking-wider text-accent hover:underline"
               >
