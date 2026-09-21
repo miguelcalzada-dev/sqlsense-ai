@@ -23,7 +23,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 border-b-4 border-line bg-bg">
       <div className="mx-auto max-w-7xl px-4">
         <nav className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 ring-focus">
+          <Link prefetch={false} href="/" className="flex items-center gap-3 ring-focus">
             <BrandMark />
             <span className="font-heading text-2xl uppercase tracking-tight">
               SQLSense<span className="text-gradient">.</span>
@@ -35,7 +35,7 @@ export default function Navbar() {
               const active = pathname?.startsWith(item.href);
               const Icon = item.icon;
               return (
-                <Link
+                <Link prefetch={false}
                   key={item.href}
                   href={item.href}
                   className={cn(
@@ -53,7 +53,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link
+            <Link prefetch={false}
               href="/lab"
               className="hidden sm:inline-flex brutal-btn brutal-btn-primary !py-2 !px-4 !text-xs"
             >
@@ -83,7 +83,7 @@ export default function Navbar() {
                 const Icon = item.icon;
                 const active = pathname?.startsWith(item.href);
                 return (
-                  <Link
+                  <Link prefetch={false}
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}
@@ -97,7 +97,7 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <Link
+              <Link prefetch={false}
                 href="/lab"
                 onClick={() => setOpen(false)}
                 className="mt-3 flex items-center justify-center brutal-btn brutal-btn-primary !text-xs"
