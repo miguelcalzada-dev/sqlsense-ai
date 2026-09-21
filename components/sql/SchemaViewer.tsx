@@ -167,7 +167,7 @@ function TableDetail({
                 {c.pk ? (
                   <Key className="h-3.5 w-3.5 text-accent-5" />
                 ) : c.fk ? (
-                  <Link2 className="h-3.5 w-3.5 text-accent-2" />
+                  <Link prefetch={false}2 className="h-3.5 w-3.5 text-accent-2" />
                 ) : (
                   <span className="ml-1 h-2 w-2 bg-sub/40" />
                 )}
@@ -208,7 +208,7 @@ function TableDetail({
             <span className="font-mono text-sm font-bold uppercase tracking-wider">Vista previa</span>
             <span className="font-mono text-xs text-sub">50 primeras filas</span>
           </div>
-          <Link
+          <Link prefetch={false}
             href="/lab"
             className="font-mono text-xs font-bold uppercase tracking-wider text-accent hover:underline"
           >
