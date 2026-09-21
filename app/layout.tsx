@@ -42,12 +42,6 @@ export default function RootLayout({
         <Navbar />
         <main className="relative z-10 pt-24">{children}</main>
         <Footer />
-        {/* Cloudflare Web Analytics */}
-        <script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon={'{"token": "1f517d798f314877860e151bb7b33f83"}'}
-        />
 
         {/* Volver al portfolio (miguelcalzada.com) */}
         <a
