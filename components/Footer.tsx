@@ -92,7 +92,7 @@ function FooterCol({
                 {item.label}
               </a>
             ) : (
-              <Link
+              <Link prefetch={false}
                 href={item.href}
                 className="font-mono text-xs uppercase tracking-wider text-sub hover:text-accent transition-colors"
               >
