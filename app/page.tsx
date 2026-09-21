@@ -19,22 +19,30 @@ import { CHALLENGES } from "@/lib/challenges";
 
 const FEATURES = [
   {
-    icon: Wand2,`n    color: "var(--accent)",`n    iconColor: "#ffffff",
+    icon: Wand2,
+    color: "var(--accent)",
+    iconColor: "#ffffff",
     title: "Lenguaje natural a SQL",
     desc: "Describe lo que necesitas en español y obtén SQL ejecutable al instante.",
   },
   {
-    icon: Database,`n    color: "var(--accent-2)",`n    iconColor: "#ffffff",
+    icon: Database,
+    color: "var(--accent-2)",
+    iconColor: "#ffffff",
     title: "Laboratorio efímero",
     desc: "SQLite en WebAssembly vive en tu pestaña. Escribe, ejecuta y reinicia sin riesgo.",
   },
   {
-    icon: Brain,`n    color: "var(--accent-4)",`n    iconColor: "#ffffff",
+    icon: Brain,
+    color: "var(--accent-4)",
+    iconColor: "#ffffff",
     title: "IA como tutor",
     desc: "Cada cláusula se razona paso a paso. Aprende el porqué, no solo el qué.",
   },
   {
-    icon: Trophy,`n    color: "var(--accent-5)",`n    iconColor: "#111111",
+    icon: Trophy,
+    color: "var(--accent-5)",
+    iconColor: "#111111",
     title: `${CHALLENGES.length} retos por dificultad`,
     desc: "De Principiante a Experto, con window functions y self-joins.",
   },
