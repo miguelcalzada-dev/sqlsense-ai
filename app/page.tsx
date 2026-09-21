@@ -251,6 +251,7 @@ function Features() {
               {...fade}
               transition={{ ...fade.transition, delay: i * 0.05 }}
               className="card p-6"
+              style={{ borderColor: f.color }}
             >
               <div
                 className="grid h-12 w-12 place-items-center border-2 border-line shadow-brutal-sm"
