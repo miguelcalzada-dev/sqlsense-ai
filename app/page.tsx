@@ -19,22 +19,22 @@ import { CHALLENGES } from "@/lib/challenges";
 
 const FEATURES = [
   {
-    icon: Wand2,
+    icon: Wand2,`n    color: "var(--accent)",`n    iconColor: "#ffffff",
     title: "Lenguaje natural a SQL",
     desc: "Describe lo que necesitas en español y obtén SQL ejecutable al instante.",
   },
   {
-    icon: Database,
+    icon: Database,`n    color: "var(--accent-2)",`n    iconColor: "#ffffff",
     title: "Laboratorio efímero",
     desc: "SQLite en WebAssembly vive en tu pestaña. Escribe, ejecuta y reinicia sin riesgo.",
   },
   {
-    icon: Brain,
+    icon: Brain,`n    color: "var(--accent-4)",`n    iconColor: "#ffffff",
     title: "IA como tutor",
     desc: "Cada cláusula se razona paso a paso. Aprende el porqué, no solo el qué.",
   },
   {
-    icon: Trophy,
+    icon: Trophy,`n    color: "var(--accent-5)",`n    iconColor: "#111111",
     title: `${CHALLENGES.length} retos por dificultad`,
     desc: "De Principiante a Experto, con window functions y self-joins.",
   },
@@ -244,8 +244,11 @@ function Features() {
               transition={{ ...fade.transition, delay: i * 0.05 }}
               className="card p-6"
             >
-              <div className="grid h-12 w-12 place-items-center border-2 border-line bg-bg-soft shadow-brutal-sm">
-                <Icon className="h-5 w-5" strokeWidth={2.5} />
+              <div
+                className="grid h-12 w-12 place-items-center border-2 border-line shadow-brutal-sm"
+                style={{ backgroundColor: f.color }}
+              >
+                <Icon className="h-5 w-5" strokeWidth={2.5} style={{ color: f.iconColor }} />
               </div>
               <h3 className="mt-5 font-heading text-xl uppercase">{f.title}</h3>
               <p className="mt-2 font-body text-sm text-sub">
